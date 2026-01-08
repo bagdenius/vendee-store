@@ -4,24 +4,24 @@ import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { Slot } from 'radix-ui';
 
-import { cn } from '@/src/shared/lib/utils/tailwindMerge';
-import { Button } from '@/src/shared/components/ui/button';
-import { Input } from '@/src/shared/components/ui/input';
-import { Separator } from '@/src/shared/components/ui/separator';
+import { cn } from '@/shared/lib/utils/tailwindMerge';
+import { Button } from '@/shared/components/ui/Button';
+import { Input } from '@/shared/components/ui/Input';
+import { Separator } from '@/shared/components/ui/Separator';
 import {
   Sheet,
   SheetContent,
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from '@/src/shared/components/ui/sheet';
-import { Skeleton } from '@/src/shared/components/ui/skeleton';
+} from '@/shared/components/ui/Sheet';
+import { Skeleton } from '@/shared/components/ui/Skeleton';
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '@/src/shared/components/ui/tooltip';
-import { useIsMobile } from '@/src/shared/hooks/use-mobile';
+} from '@/shared/components/ui/Tooltip';
+import { useIsMobile } from '@/shared/hooks/use-mobile';
 import { PanelLeftIcon } from 'lucide-react';
 
 const SIDEBAR_COOKIE_NAME = 'sidebar_state';

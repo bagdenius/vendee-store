@@ -3,23 +3,26 @@
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
-import { createSupabaseServerClient } from '@/src/shared/lib/supabase/server-client';
+import { createSupabaseServerClient } from '@/shared/lib/supabase/server-client';
+import { loginSchema, LoginSchema } from '../types/LoginSchema';
 
-export async function login(formData: FormData) {
+export async function login(data: LoginSchema) {
   const supabase = await createSupabaseServerClient();
 
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
-  const data = {
-    email: formData.get('email') as string,
-    password: formData.get('password') as string,
-  };
-
-  const { error } = await supabase.auth.signInWithPassword(data);
-
-  if (error) {
-    redirect('/error');
+  const result = loginSchema.safeParse(data);
+  let validationErrors: { [key: string]: string } = {};
+  if (!result.success) {
+    result.error.issues.forEach((issue) => {
+      validationErrors = {
+        ...validationErrors,
+        [issue.path[0]]: issue.message,
+      };
+    });
+    return { validationErrors };
   }
+
+  const { error } = await supabase.auth.signInWithPassword(result.data);
+  if (error) return { error: 'Invalid email or password' };
 
   revalidatePath('/', 'layout');
   redirect('/');
@@ -56,12 +59,14 @@ export async function signup(formData: FormData) {
 export async function signout() {
   const supabase = await createSupabaseServerClient();
   const { error } = await supabase.auth.signOut();
+  console.log('signout');
+
   if (error) {
     console.log(error);
     redirect('/error');
   }
 
-  redirect('/logout');
+  redirect('/');
 }
 
 export async function signInWithGoogle() {

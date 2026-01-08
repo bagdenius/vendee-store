@@ -3,8 +3,8 @@
 import * as React from 'react';
 import { AlertDialog as AlertDialogPrimitive } from 'radix-ui';
 
-import { cn } from '@/src/shared/lib/utils/tailwindMerge';
-import { Button } from '@/src/shared/components/ui/button';
+import { cn } from '@/shared/lib/utils/tailwindMerge';
+import { Button } from '@/shared/components/ui/Button';
 
 function AlertDialog({
   ...props

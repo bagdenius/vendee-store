@@ -3,14 +3,14 @@
 import * as React from 'react';
 import { Combobox as ComboboxPrimitive } from '@base-ui/react';
 
-import { cn } from '@/src/shared/lib/utils/tailwindMerge';
-import { Button } from '@/src/shared/components/ui/button';
+import { cn } from '@/shared/lib/utils/tailwindMerge';
+import { Button } from '@/shared/components/ui/Button';
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
   InputGroupInput,
-} from '@/src/shared/components/ui/input-group';
+} from '@/shared/components/ui/InputGroup';
 import { ChevronDownIcon, XIcon, CheckIcon } from 'lucide-react';
 
 const Combobox = ComboboxPrimitive.Root;

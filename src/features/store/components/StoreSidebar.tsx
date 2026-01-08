@@ -27,8 +27,12 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/shared/components/ui/Sidebar';
+import { Button } from '@/shared/components/ui/Button';
+import Link from 'next/link';
+import { User } from '@supabase/supabase-js';
+import { UserProfile } from '@/shared/lib/actions/user';
 
-const data = {
+const dataMock = {
   user: {
     name: 'shadcn',
     email: 'm@example.com',
@@ -152,7 +156,11 @@ const data = {
   ],
 };
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+type StoreSidebarProps = React.ComponentProps<typeof Sidebar> & {
+  user: UserProfile | null;
+};
+
+export function StoreSidebar({ user, ...props }: StoreSidebarProps) {
   return (
     <Sidebar
       className='top-(--header-height) h-[calc(100svh-var(--header-height))]!'
@@ -167,8 +175,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   <Command className='size-4' />
                 </div>
                 <div className='grid flex-1 text-left text-sm leading-tight'>
-                  <span className='truncate font-medium'>Acme Inc</span>
-                  <span className='truncate text-xs'>Enterprise</span>
+                  <span className='truncate font-medium'>vendee</span>
+                  <span className='truncate text-xs'>store</span>
                 </div>
               </a>
             </SidebarMenuButton>
@@ -176,12 +184,25 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
-        <NavSecondary items={data.navSecondary} className='mt-auto' />
+        <NavMain items={dataMock.navMain} />
+        <NavProjects projects={dataMock.projects} />
+        <NavSecondary items={dataMock.navSecondary} className='mt-auto' />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        {user ? (
+          <NavUser user={user} />
+        ) : (
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <Button variant='default' asChild>
+                <Link href='/auth/login'>Sign in</Link>
+              </Button>
+              <Button variant='link' asChild>
+                <Link href='/auth/signup'>Sign up</Link>
+              </Button>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        )}
       </SidebarFooter>
     </Sidebar>
   );

@@ -6,7 +6,7 @@ import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from '@/src/shared/components/ui/collapsible';
+} from '@/shared/components/ui/Collapsible';
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -17,7 +17,7 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-} from '@/src/shared/components/ui/sidebar';
+} from '@/shared/components/ui/Sidebar';
 
 export function NavMain({
   items,

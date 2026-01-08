@@ -1,33 +1,51 @@
-import { AppSidebar } from '@/src/shared/components/ui/AppSidebar';
-import { SiteHeader } from '@/src/shared/components/ui/SiteHeader';
-import {
-  SidebarInset,
-  SidebarProvider,
-} from '@/src/shared/components/ui/sidebar';
+import RandomImageFadeCarousel from '@/shared/components/ui/RandomImageFadeCarousel';
 
-export const iframeHeight = '800px';
+const events = [{ id: 1 }, { id: 2 }, { id: 3 }];
 
-export const description = 'A sidebar with a header and a search form.';
+const products = [
+  { id: 1 },
+  { id: 2 },
+  { id: 3 },
+  { id: 4 },
+  { id: 5 },
+  { id: 6 },
+  { id: 7 },
+  { id: 8 },
+];
 
-export default function Page() {
+export default function StoreHomePage() {
   return (
-    <div className='[--header-height:calc(--spacing(14))]'>
-      <SidebarProvider className='flex flex-col'>
-        <SiteHeader />
-        <div className='flex flex-1'>
-          <AppSidebar />
-          <SidebarInset>
-            <div className='flex flex-1 flex-col gap-4 p-4'>
-              <div className='grid auto-rows-min gap-4 md:grid-cols-3'>
-                <div className='bg-muted/50 aspect-video rounded-xl' />
-                <div className='bg-muted/50 aspect-video rounded-xl' />
-                <div className='bg-muted/50 aspect-video rounded-xl' />
-              </div>
-              <div className='bg-muted/50 min-h-screen flex-1 rounded-xl md:min-h-min' />
-            </div>
-          </SidebarInset>
-        </div>
-      </SidebarProvider>
+    <div className='flex flex-col gap-4 p-4'>
+      {/* to StoreHero.tsx */}
+      <div className='flex relative items-center justify-center h-[40lvh] overflow-hidden bg-muted/50 rounded-xl'>
+        <RandomImageFadeCarousel />
+        <span className='absolute'>hero</span>
+      </div>
+
+      <div className='grid auto-rows-min gap-4 md:grid-cols-3'>
+        {events.slice(0, 3).map((event, i) => (
+          // to StoreEvent.tsx
+          <div
+            key={i}
+            className='flex relative overflow-hidden items-center justify-center bg-muted/50 aspect-video rounded-xl'
+          >
+            <RandomImageFadeCarousel />
+            <span className='absolute'>event {i + 1}</span>
+          </div>
+        ))}
+      </div>
+
+      <div className='grid grid-cols-5 gap-4 p-4 min-h-screen bg-muted/50 rounded-xl md:min-h-min'>
+        {products.map((product, i) => (
+          // to ProductCard.tsx
+          <div
+            key={i}
+            className='flex items-center justify-center h-96 bg-background rounded-xl'
+          >
+            product {i + 1}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

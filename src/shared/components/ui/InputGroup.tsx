@@ -3,10 +3,10 @@
 import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 
-import { cn } from '@/src/shared/lib/utils/tailwindMerge';
-import { Button } from '@/src/shared/components/ui/button';
-import { Input } from '@/src/shared/components/ui/input';
-import { Textarea } from '@/src/shared/components/ui/textarea';
+import { cn } from '@/shared/lib/utils/tailwindMerge';
+import { Button } from '@/shared/components/ui/Button';
+import { Input } from '@/shared/components/ui/Input';
+import { Textarea } from '@/shared/components/ui/textarea';
 
 function InputGroup({ className, ...props }: React.ComponentProps<'div'>) {
   return (

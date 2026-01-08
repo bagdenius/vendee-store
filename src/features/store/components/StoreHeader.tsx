@@ -14,8 +14,9 @@ import {
 import { Button } from '@/shared/components/ui/Button';
 import { Separator } from '@/shared/components/ui/Separator';
 import { useSidebar } from '@/shared/components/ui/Sidebar';
+import { ThemeToggle } from '@/features/theme/components/ThemeToggle';
 
-export function SiteHeader() {
+export function StoreHeader() {
   const { toggleSidebar } = useSidebar();
 
   return (
@@ -44,6 +45,7 @@ export function SiteHeader() {
           </BreadcrumbList>
         </Breadcrumb>
         <SearchForm className='w-full sm:ml-auto sm:w-auto' />
+        <ThemeToggle />
       </div>
     </header>
   );

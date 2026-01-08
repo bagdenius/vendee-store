@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono, Inter } from 'next/font/google';
-import '@/src/shared/styles/globals.css';
-import { ThemeProvider } from '../shared/providers/ThemeProvider';
-import { ThemeToggle } from '../shared/components/ThemeModeToggle';
+import '@/shared/styles/globals.css';
+import { ThemeProvider } from '@/features/theme/components/ThemeProvider';
+import { ThemeToggle } from '@/features/theme/components/ThemeToggle';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 

@@ -3,21 +3,17 @@
 import { createBrowserClient } from '@supabase/ssr';
 import type { SupabaseClient } from '@supabase/supabase-js';
 
-import { getEnvironmentVariables } from '../utils/getEnvironmentVariables';
+import { getEnvironmentVariables } from '@/shared/lib/utils/getEnvironmentVariables';
+import { Database } from '@/shared/types/database.types';
 
-type SupabaseSchema = Record<string, never>;
+let client: SupabaseClient<Database> | null = null;
 
-let client: SupabaseClient<SupabaseSchema> | null = null;
-
-export function getSupabaseBrowserClient(): SupabaseClient<SupabaseSchema> {
+export function getSupabaseBrowserClient(): SupabaseClient<Database> {
   if (client) {
     return client;
   }
 
   const { supabaseUrl, supabasePublishableKey } = getEnvironmentVariables();
-  client = createBrowserClient<SupabaseSchema>(
-    supabaseUrl,
-    supabasePublishableKey
-  );
+  client = createBrowserClient<Database>(supabaseUrl, supabasePublishableKey);
   return client;
 }

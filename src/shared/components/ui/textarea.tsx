@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { cn } from '@/src/shared/lib/utils/tailwindMerge';
+import { cn } from '@/shared/lib/utils/tailwindMerge';
 
 function Textarea({ className, ...props }: React.ComponentProps<'textarea'>) {
   return (

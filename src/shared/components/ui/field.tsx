@@ -3,9 +3,9 @@
 import { useMemo } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 
-import { cn } from '@/src/shared/lib/utils/tailwindMerge';
-import { Label } from '@/src/shared/components/ui/label';
-import { Separator } from '@/src/shared/components/ui/separator';
+import { cn } from '@/shared/lib/utils/tailwindMerge';
+import { Label } from '@/shared/components/ui/Label';
+import { Separator } from '@/shared/components/ui/Separator';
 
 function FieldSet({ className, ...props }: React.ComponentProps<'fieldset'>) {
   return (
