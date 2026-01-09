@@ -1,8 +1,8 @@
 import { GalleryVerticalEnd } from 'lucide-react';
+import Link from 'next/link';
 
 import { LoginForm } from '@/features/auth/components/LoginForm';
 import RandomImageFadeCarousel from '@/shared/components/ui/RandomImageFadeCarousel';
-import Link from 'next/link';
 
 export default function LoginPage() {
   return (

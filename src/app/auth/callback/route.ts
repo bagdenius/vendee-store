@@ -1,9 +1,10 @@
+import { NextResponse } from 'next/server';
+
 import {
   createProfileFromProviderUser,
   getProfile,
 } from '@/features/auth/services/user';
 import { createSupabaseServerClient } from '@/shared/lib/supabase/server';
-import { NextResponse } from 'next/server';
 
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);

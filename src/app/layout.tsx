@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono, Inter } from 'next/font/google';
 
 import { ThemeProvider } from '@/features/theme/components/ThemeProvider';
-import { ThemeToggle } from '@/features/theme/components/ThemeToggle';
 
 import '@/shared/styles/globals.css';
 
