@@ -1,6 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Provider } from '@supabase/supabase-js';
 import { MouseEvent } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
@@ -19,7 +20,7 @@ import { Toaster } from '@/shared/components/ui/Sonner';
 import { Spinner } from '@/shared/components/ui/Spinner';
 import { cn } from '@/shared/lib/utils/tailwindMerge';
 
-import { login, signInWithGoogle } from '../services/auth';
+import { login, signInWithProvider } from '../services/auth';
 import { loginSchema, LoginSchema } from '../types/LoginSchema';
 
 export function LoginForm({
@@ -48,30 +49,21 @@ export function LoginForm({
         });
       });
     }
-
     if (error) {
       return toast.warning(error);
-      // return setError('root', { type: 'server', message: error });
     }
     reset();
   }
 
-  async function handleGoogleSignIn(
-    event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
+  async function handleSignInWithProvider(
+    event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
+    provider: Provider
   ) {
     event.preventDefault();
-    const { error } = await signInWithGoogle();
-
+    const { error } = await signInWithProvider(provider);
     if (error) {
       toast.error(error.message);
     }
-  }
-
-  async function handleGithubSignIn(
-    event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
-  ) {
-    event.preventDefault();
-    toast.error('GitHub sign-in not implemented yet.');
   }
 
   async function handleAppleSignIn(
@@ -85,7 +77,6 @@ export function LoginForm({
     <>
       <Toaster position='top-center' />
       <form
-        // action={login}
         onSubmit={handleSubmit(onSubmit)}
         className={cn('flex flex-col gap-6', className)}
         {...props}
@@ -108,7 +99,8 @@ export function LoginForm({
               <FieldLabel htmlFor='password'>Password</FieldLabel>
               <a
                 href='#'
-                className='ml-auto text-sm text-primary underline-offset-4 hover:underline '
+                className='ml-auto text-sm text-primary underline-offset-4 hover:underline'
+                onClick={() => toast.error('Not implemented yet.')}
               >
                 Forgot your password?
               </a>
@@ -135,7 +127,7 @@ export function LoginForm({
             <Button
               variant='outline'
               type='button'
-              onClick={handleGoogleSignIn}
+              onClick={(event) => handleSignInWithProvider(event, 'google')}
             >
               <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>
                 <path
@@ -148,7 +140,7 @@ export function LoginForm({
             <Button
               variant='outline'
               type='button'
-              onClick={handleGithubSignIn}
+              onClick={(event) => handleSignInWithProvider(event, 'github')}
             >
               <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>
                 <path

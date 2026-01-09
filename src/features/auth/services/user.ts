@@ -2,13 +2,16 @@ import { createSupabaseServerClient } from '@/shared/lib/supabase/server';
 
 import { ProfileInsert, User, UserProfile } from '../types/User';
 
-export async function createProfileFromGoogleUser(user: User) {
+export async function createProfileFromProviderUser(user: User) {
   const supabase = await createSupabaseServerClient();
   const profile: ProfileInsert = {
     id: user.id,
-    username: user.email?.split('@')[0] ?? `user_${user.id.slice(0, 6)}`,
+    username:
+      user.user_metadata.user_name ??
+      user.user_metadata.preferred_username ??
+      user.email,
     email: user.email!,
-    full_name: user.user_metadata.full_name || null,
+    full_name: user.user_metadata.full_name ?? user.user_metadata.name ?? null,
     avatar:
       user.user_metadata?.avatar_url ?? user.user_metadata?.picture ?? null,
     created_at: new Date().toISOString(),
@@ -42,9 +45,9 @@ export async function getProfile(userId: string) {
 
 export async function getUserProfile(): Promise<UserProfile | null> {
   const user = await getUser();
-  console.log('USER', user);
+  // console.log('USER', user);
   if (!user) return null;
   const profile = await getProfile(user.id);
-  console.log('PROFILE', profile);
+  // console.log('PROFILE', profile);
   return { ...user, ...profile } as UserProfile;
 }

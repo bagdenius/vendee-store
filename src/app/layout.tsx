@@ -34,12 +34,6 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
-          <div className='fixed w-full z-10'>
-            <div className='flex items-center justify-end w-full h-16 max-w-full px-5'>
-              {/* <span>vendee</span> */}
-              <ThemeToggle />
-            </div>
-          </div>
           {children}
         </ThemeProvider>
       </body>

@@ -6,15 +6,15 @@ import { redirect } from 'next/navigation';
 import { createSupabaseServerClient } from '@/shared/lib/supabase/server';
 
 import { loginSchema, LoginSchema } from '../types/LoginSchema';
-import { getUser } from './user';
+import { Provider } from '@supabase/supabase-js';
 
-export async function protectRoute() {
-  const user = await getUser();
-  if (!user) {
-    // redirect('/login');
-    throw new Error('Unauthorized');
-  }
-}
+// export async function protectRoute() {
+//   const user = await getUser();
+//   if (!user) {
+//     // redirect('/login');
+//     throw new Error('Unauthorized');
+//   }
+// }
 
 export async function login(data: LoginSchema) {
   const supabase = await createSupabaseServerClient();
@@ -90,7 +90,46 @@ export async function signInWithGoogle() {
       },
     },
   });
-  if (error) return { error };
-  // revalidatePath('/', 'layout');
+  if (error) {
+    console.error(`Google sign in error: ${error.message}`);
+    return { error };
+  }
+  redirect(data.url);
+}
+
+export async function signInWithGitHub() {
+  const supabase = await createSupabaseServerClient();
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: 'github',
+    options: {
+      redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/auth/callback`,
+      queryParams: {
+        prompt: 'consent',
+      },
+    },
+  });
+  if (error) {
+    console.error(`GitHub sign in error: ${error.message}`);
+    return { error };
+  }
+  redirect(data.url);
+}
+
+export async function signInWithProvider(provider: Provider) {
+  const supabase = await createSupabaseServerClient();
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider,
+    options: {
+      redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/auth/callback`,
+      queryParams: {
+        access_type: 'offline',
+        prompt: 'consent',
+      },
+    },
+  });
+  if (error) {
+    console.error(`GitHub sign in error: ${error.message}`);
+    return { error };
+  }
   redirect(data.url);
 }
