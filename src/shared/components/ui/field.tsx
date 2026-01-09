@@ -1,11 +1,11 @@
 'use client';
 
-import { useMemo } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
+import { useMemo } from 'react';
 
-import { cn } from '@/shared/lib/utils/tailwindMerge';
 import { Label } from '@/shared/components/ui/Label';
 import { Separator } from '@/shared/components/ui/Separator';
+import { cn } from '@/shared/lib/utils/tailwindMerge';
 
 function FieldSet({ className, ...props }: React.ComponentProps<'fieldset'>) {
   return (
@@ -226,13 +226,13 @@ function FieldError({
 
 export {
   Field,
-  FieldLabel,
+  FieldContent,
   FieldDescription,
   FieldError,
   FieldGroup,
+  FieldLabel,
   FieldLegend,
   FieldSeparator,
   FieldSet,
-  FieldContent,
   FieldTitle,
 };

@@ -1,6 +1,5 @@
 'use client';
 
-import * as React from 'react';
 import {
   BookOpen,
   Bot,
@@ -13,7 +12,10 @@ import {
   Settings2,
   SquareTerminal,
 } from 'lucide-react';
+import Link from 'next/link';
+import * as React from 'react';
 
+import { UserProfile } from '@/features/auth/types/User';
 import { NavMain } from '@/shared/components/ui/NavMain';
 import { NavProjects } from '@/shared/components/ui/NavProjects';
 import { NavSecondary } from '@/shared/components/ui/NavSecondary';
@@ -27,6 +29,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/shared/components/ui/Sidebar';
+
+import { Button } from './Button';
 
 const data = {
   user: {
@@ -152,7 +156,11 @@ const data = {
   ],
 };
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+type AppSidebarProps = React.ComponentProps<typeof Sidebar> & {
+  user: UserProfile | null;
+};
+
+export function AppSidebar({ user, ...props }: AppSidebarProps) {
   return (
     <Sidebar
       className='top-(--header-height) h-[calc(100svh-var(--header-height))]!'
@@ -181,7 +189,20 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavSecondary items={data.navSecondary} className='mt-auto' />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        {user ? (
+          <NavUser user={user} />
+        ) : (
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <Button variant='default' asChild>
+                <Link href='/auth/login'>Sign in</Link>
+              </Button>
+              <Button variant='link' asChild>
+                <Link href='/auth/signup'>Sign up</Link>
+              </Button>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        )}
       </SidebarFooter>
     </Sidebar>
   );

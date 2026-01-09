@@ -1,11 +1,11 @@
 'use client';
 
-import * as React from 'react';
-import { Dialog as SheetPrimitive } from 'radix-ui';
-
-import { cn } from '@/shared/lib/utils/tailwindMerge';
-import { Button } from '@/shared/components/ui/Button';
 import { XIcon } from 'lucide-react';
+import { Dialog as SheetPrimitive } from 'radix-ui';
+import * as React from 'react';
+
+import { Button } from '@/shared/components/ui/Button';
+import { cn } from '@/shared/lib/utils/tailwindMerge';
 
 function Sheet({ ...props }: React.ComponentProps<typeof SheetPrimitive.Root>) {
   return <SheetPrimitive.Root data-slot='sheet' {...props} />;
@@ -133,11 +133,11 @@ function SheetDescription({
 
 export {
   Sheet,
-  SheetTrigger,
   SheetClose,
   SheetContent,
-  SheetHeader,
-  SheetFooter,
-  SheetTitle,
   SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
 };

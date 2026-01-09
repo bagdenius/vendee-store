@@ -1,12 +1,12 @@
 'use client';
 
-import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
+import * as React from 'react';
 
-import { cn } from '@/shared/lib/utils/tailwindMerge';
 import { Button } from '@/shared/components/ui/Button';
 import { Input } from '@/shared/components/ui/Input';
-import { Textarea } from '@/shared/components/ui/textarea';
+import { Textarea } from '@/shared/components/ui/Textarea';
+import { cn } from '@/shared/lib/utils/tailwindMerge';
 
 function InputGroup({ className, ...props }: React.ComponentProps<'div'>) {
   return (
@@ -150,7 +150,7 @@ export {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
-  InputGroupText,
   InputGroupInput,
+  InputGroupText,
   InputGroupTextarea,
 };

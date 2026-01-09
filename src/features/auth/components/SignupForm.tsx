@@ -1,5 +1,6 @@
 import { cn } from '@/shared/lib/utils/tailwindMerge';
 
+import { Button } from '@/shared/components/ui/Button';
 import {
   Field,
   FieldDescription,
@@ -8,7 +9,6 @@ import {
   FieldSeparator,
 } from '@/shared/components/ui/Field';
 import { Input } from '@/shared/components/ui/Input';
-import { Button } from '@/shared/components/ui/Button';
 
 export function SignupForm({
   className,

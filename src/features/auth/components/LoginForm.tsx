@@ -15,7 +15,7 @@ import {
   FieldSeparator,
 } from '@/shared/components/ui/Field';
 import { Input } from '@/shared/components/ui/Input';
-import { Toaster } from '@/shared/components/ui/sonner';
+import { Toaster } from '@/shared/components/ui/Sonner';
 import { Spinner } from '@/shared/components/ui/Spinner';
 import { cn } from '@/shared/lib/utils/tailwindMerge';
 

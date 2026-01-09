@@ -2,7 +2,6 @@
 
 import { SidebarIcon } from 'lucide-react';
 
-import { SearchForm } from '@/shared/components/ui/SearchForm';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -12,6 +11,7 @@ import {
   BreadcrumbSeparator,
 } from '@/shared/components/ui/Breadcrumb';
 import { Button } from '@/shared/components/ui/Button';
+import { SearchForm } from '@/shared/components/ui/SearchForm';
 import { Separator } from '@/shared/components/ui/Separator';
 import { useSidebar } from '@/shared/components/ui/Sidebar';
 
