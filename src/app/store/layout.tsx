@@ -1,7 +1,7 @@
+import { getUserProfile } from '@/features/auth/services/user';
 import { StoreHeader } from '@/features/store/components/StoreHeader';
 import { StoreSidebar } from '@/features/store/components/StoreSidebar';
 import { SidebarInset, SidebarProvider } from '@/shared/components/ui/Sidebar';
-import { getUserProfile } from '@/shared/lib/actions/user';
 
 export const iframeHeight = '800px';
 

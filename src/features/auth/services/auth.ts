@@ -3,8 +3,18 @@
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
-import { createSupabaseServerClient } from '@/shared/lib/supabase/server-client';
+import { createSupabaseServerClient } from '@/shared/lib/supabase/server';
+
 import { loginSchema, LoginSchema } from '../types/LoginSchema';
+import { getUser } from './user';
+
+export async function protectRoute() {
+  const user = await getUser();
+  if (!user) {
+    // redirect('/login');
+    throw new Error('Unauthorized');
+  }
+}
 
 export async function login(data: LoginSchema) {
   const supabase = await createSupabaseServerClient();
@@ -59,7 +69,6 @@ export async function signup(formData: FormData) {
 export async function signout() {
   const supabase = await createSupabaseServerClient();
   const { error } = await supabase.auth.signOut();
-  console.log('signout');
 
   if (error) {
     console.log(error);
@@ -74,17 +83,14 @@ export async function signInWithGoogle() {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
     options: {
+      redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/auth/callback`,
       queryParams: {
         access_type: 'offline',
         prompt: 'consent',
       },
     },
   });
-
-  if (error) {
-    console.log(error);
-    redirect('/error');
-  }
-
+  if (error) return { error };
+  // revalidatePath('/', 'layout');
   redirect(data.url);
 }

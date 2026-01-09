@@ -1,6 +1,5 @@
 'use client';
 
-import * as React from 'react';
 import {
   BookOpen,
   Bot,
@@ -13,7 +12,11 @@ import {
   Settings2,
   SquareTerminal,
 } from 'lucide-react';
+import Link from 'next/link';
+import * as React from 'react';
 
+import { UserProfile } from '@/features/auth/types/User';
+import { Button } from '@/shared/components/ui/Button';
 import { NavMain } from '@/shared/components/ui/NavMain';
 import { NavProjects } from '@/shared/components/ui/NavProjects';
 import { NavSecondary } from '@/shared/components/ui/NavSecondary';
@@ -27,10 +30,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/shared/components/ui/Sidebar';
-import { Button } from '@/shared/components/ui/Button';
-import Link from 'next/link';
-import { User } from '@supabase/supabase-js';
-import { UserProfile } from '@/shared/lib/actions/user';
+import { Spinner } from '@/shared/components/ui/Spinner';
 
 const dataMock = {
   user: {
@@ -160,7 +160,9 @@ type StoreSidebarProps = React.ComponentProps<typeof Sidebar> & {
   user: UserProfile | null;
 };
 
-export function StoreSidebar({ user, ...props }: StoreSidebarProps) {
+export function StoreSidebar({ ...props }: StoreSidebarProps) {
+  const user = props.user;
+
   return (
     <Sidebar
       className='top-(--header-height) h-[calc(100svh-var(--header-height))]!'
@@ -189,20 +191,22 @@ export function StoreSidebar({ user, ...props }: StoreSidebarProps) {
         <NavSecondary items={dataMock.navSecondary} className='mt-auto' />
       </SidebarContent>
       <SidebarFooter>
-        {user ? (
-          <NavUser user={user} />
-        ) : (
-          <SidebarMenu>
-            <SidebarMenuItem>
-              <Button variant='default' asChild>
-                <Link href='/auth/login'>Sign in</Link>
-              </Button>
-              <Button variant='link' asChild>
-                <Link href='/auth/signup'>Sign up</Link>
-              </Button>
-            </SidebarMenuItem>
-          </SidebarMenu>
-        )}
+        <React.Suspense fallback={<Spinner />}>
+          {user ? (
+            <NavUser user={user} />
+          ) : (
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <Button variant='default' asChild>
+                  <Link href='/auth/login'>Sign in</Link>
+                </Button>
+                <Button variant='link' asChild>
+                  <Link href='/auth/signup'>Sign up</Link>
+                </Button>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          )}
+        </React.Suspense>
       </SidebarFooter>
     </Sidebar>
   );

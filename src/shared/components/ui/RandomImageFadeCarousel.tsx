@@ -26,12 +26,10 @@ export default function RandomImageFadeCarousel() {
 
   useEffect(() => {
     intervalRef.current = setInterval(() => {
-      console.log('swap - animation start');
       swap();
 
       setTimeout(() => {
         const hiddenIndex = showFirst ? 0 : 1;
-        console.log('animation end');
         const newSrc = generateRandomImageUrl();
 
         setImages((images) => {
