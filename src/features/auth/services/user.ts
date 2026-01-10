@@ -14,17 +14,16 @@ export async function createProfileFromProviderUser(user: User) {
     full_name: user.user_metadata.full_name ?? user.user_metadata.name ?? null,
     avatar:
       user.user_metadata?.avatar_url ?? user.user_metadata?.picture ?? null,
-    created_at: new Date().toISOString(),
     role: 'user',
   };
   const { error: insertError } = await supabase
     .from('profiles')
     .insert(profile);
   if (insertError) {
-    console.error('Profile creation error:', insertError);
-    throw insertError;
+    console.error('An error occured while inserting profile:', insertError);
+    return { error: insertError };
   }
-  return profile;
+  return { profile };
 }
 
 export async function getUser() {

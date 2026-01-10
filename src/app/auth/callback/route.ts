@@ -20,7 +20,7 @@ export async function GET(request: Request) {
     if (!error) {
       // create user profile if doesn't exist
       const user = (await supabase.auth.getUser()).data.user;
-      console.log('USER', user);
+      // console.log('USER', user);
       if (!user) return NextResponse.redirect(`${origin}/auth/login`);
       const userProfile = await getProfile(user.id);
       if (!userProfile) createProfileFromProviderUser(user);
