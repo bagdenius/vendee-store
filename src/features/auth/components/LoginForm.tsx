@@ -151,12 +151,12 @@ export function LoginForm({
             <span className='sr-only'>Login with GitHub</span>
           </Button>
         </Field>
-        <FieldDescription className='text-center'>
+        {/* <FieldDescription className='text-center'>
           Don&apos;t have an account?{' '}
           <Link href='/auth/signup' className='underline underline-offset-4'>
             Sign up
           </Link>
-        </FieldDescription>
+        </FieldDescription> */}
       </FieldGroup>
     </form>
   );
