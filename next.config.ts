@@ -9,6 +9,9 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
+      new URL(
+        'https://llwedkywjjlauduymnhr.supabase.co/storage/v1/object/public/product-images/**'
+      ),
     ],
   },
 };

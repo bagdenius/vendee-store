@@ -11,6 +11,7 @@ import {
   Send,
   Settings2,
   SquareTerminal,
+  User,
 } from 'lucide-react';
 import Link from 'next/link';
 import * as React from 'react';
@@ -30,7 +31,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/shared/components/ui/Sidebar';
-import { Spinner } from '@/shared/components/ui/Spinner';
 
 const dataMock = {
   user: {
@@ -191,22 +191,20 @@ export function StoreSidebar({ ...props }: StoreSidebarProps) {
         <NavSecondary items={dataMock.navSecondary} className='mt-auto' />
       </SidebarContent>
       <SidebarFooter>
-        <React.Suspense fallback={<Spinner />}>
-          {user ? (
-            <NavUser user={user} />
-          ) : (
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <Button variant='default' asChild>
-                  <Link href='/auth/login'>Sign in</Link>
-                </Button>
-                <Button variant='link' asChild>
-                  <Link href='/auth/signup'>Sign up</Link>
-                </Button>
-              </SidebarMenuItem>
-            </SidebarMenu>
-          )}
-        </React.Suspense>
+        {user ? (
+          <NavUser user={user} />
+        ) : (
+          <SidebarMenu>
+            <SidebarMenuItem className='text-center'>
+              <Button variant='link' asChild>
+                <Link href='/auth'>
+                  <User />
+                  <span>Log in to your account</span>
+                </Link>
+              </Button>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        )}
       </SidebarFooter>
     </Sidebar>
   );
