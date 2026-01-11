@@ -1,10 +1,12 @@
 'use client';
 
 import {
+  AxeIcon,
   BookOpen,
   Bot,
   Command,
   Frame,
+  Info,
   LifeBuoy,
   Map,
   PieChart,
@@ -33,11 +35,6 @@ import {
 } from '@/shared/components/ui/Sidebar';
 
 const dataMock = {
-  user: {
-    name: 'shadcn',
-    email: 'm@example.com',
-    avatar: '/avatars/shadcn.jpg',
-  },
   navMain: [
     {
       title: 'Playground',
@@ -136,6 +133,11 @@ const dataMock = {
       url: '#',
       icon: Send,
     },
+    {
+      title: 'Payment and Delivery',
+      url: '#',
+      icon: Info,
+    },
   ],
   projects: [
     {
@@ -165,11 +167,23 @@ export function StoreSidebar({ ...props }: StoreSidebarProps) {
 
   return (
     <Sidebar
+      collapsible='icon'
       className='top-(--header-height) h-[calc(100svh-var(--header-height))]!'
       {...props}
     >
-      <SidebarHeader>
+      {/* <SidebarHeader>
         <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              asChild
+              className='data-[slot=sidebar-menu-button]:!p-1.5'
+            >
+              <a href='#'>
+                <AxeIcon className='!size-5' />
+                <span className='text-base font-semibold'>Acme Inc.</span>
+              </a>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
           <SidebarMenuItem>
             <SidebarMenuButton size='lg' asChild>
               <a href='#'>
@@ -184,7 +198,7 @@ export function StoreSidebar({ ...props }: StoreSidebarProps) {
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
-      </SidebarHeader>
+      </SidebarHeader> */}
       <SidebarContent>
         <NavMain items={dataMock.navMain} />
         <NavProjects projects={dataMock.projects} />
