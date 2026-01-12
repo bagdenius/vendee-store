@@ -36,6 +36,7 @@ const mockEvents = [
   },
 ];
 
+// todo: bug fix: something is pushing the carousel width so the block overlows
 export default function StoreEventsList() {
   return (
     <Carousel>

@@ -25,7 +25,7 @@ export default function StoreEventCard({
 
   return (
     <Link href='#' onClick={handleClick}>
-      <div className='flex relative overflow-hidden items-center justify-center bg-muted/50 aspect-square rounded-xl hover:ring-3 hover:ring-muted/50 transition-all'>
+      <div className='flex relative overflow-hidden items-center justify-center bg-muted/50 aspect-3/2 rounded-xl hover:ring-3 hover:ring-muted/50 transition-all'>
         <RandomImageFadeCarousel />
         <h2 className='inline-block max-w-fit w-2/3 border-b-4 pb-1 text-3xl text-center font-semibold tracking-tight z-1 hover:scale-x-115 hover:scale-y-105 transition-transform '>
           {event.text}

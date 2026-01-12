@@ -1,15 +1,19 @@
 import Link from 'next/link';
 
-import { getAllProductsWithImageUrls } from '../services/product';
+import { getAllProducts } from '../services/product';
 import ProductCard from './ProductCard';
 
+// todo: change grid to carousel
 export default async function ProductListByCategory({
   category,
 }: {
   category: { id: string; name: string; slug: string };
 }) {
-  // todo: cut to category
-  const { products, error } = await getAllProductsWithImageUrls();
+  // todo: filter category in server action
+  const { products, error } = await getAllProducts();
+  const filtered = products?.filter((p) =>
+    p.categories.some((c) => c.id === category.id)
+  );
 
   return (
     <div className='flex flex-col p-4 gap-3'>
@@ -26,7 +30,7 @@ export default async function ProductListByCategory({
       </h3>
 
       <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4'>
-        {products?.map((product) => (
+        {filtered?.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
