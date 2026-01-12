@@ -1,0 +1,31 @@
+import { getUserProfile } from '../../features/auth/services/user';
+import { StoreHeader } from '../../features/store/components/StoreHeader';
+import { StoreSidebar } from '../../features/store/components/StoreSidebar';
+import {
+  SidebarInset,
+  SidebarProvider,
+} from '../../shared/components/ui/Sidebar';
+
+export const iframeHeight = '800px';
+
+export const description = 'A sidebar with a header and a search form.';
+
+export default async function StoreLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  const user = await getUserProfile();
+
+  return (
+    <div className='[--header-height:calc(--spacing(14))]'>
+      <SidebarProvider className='flex flex-col max-h-svh overflow-y-auto overflow-x-hidden no-scrollbar'>
+        <StoreHeader />
+        <div className='flex flex-1'>
+          <StoreSidebar user={user} />
+          <SidebarInset>{children}</SidebarInset>
+        </div>
+      </SidebarProvider>
+    </div>
+  );
+}
