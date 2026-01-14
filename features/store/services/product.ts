@@ -1,6 +1,6 @@
 'use server';
 
-import { createSupabaseServerClient } from '../../../shared/lib/supabase/server';
+import { createSupabaseServerClient } from '@/shared/lib/supabase/server';
 
 export async function getAllProducts() {
   // fetch products, images and categories

@@ -9,8 +9,8 @@ import {
   Sparkles,
 } from 'lucide-react';
 
-import { signout } from '../../../features/auth/services/auth';
-import { UserProfile } from '../../../features/auth/types/User';
+import { signout } from '@/features/auth/services/auth';
+import { UserProfile } from '@/features/auth/types/User';
 import { Avatar, AvatarFallback, AvatarImage } from './Avatar';
 import {
   DropdownMenu,

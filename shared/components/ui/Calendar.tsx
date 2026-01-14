@@ -13,7 +13,7 @@ import {
 } from 'react-day-picker';
 
 import { Button, buttonVariants } from './Button';
-import { cn } from '../../lib/utils/tailwindMerge';
+import { cn } from '@/shared/lib/utils/tailwindMerge';
 
 function Calendar({
   className,

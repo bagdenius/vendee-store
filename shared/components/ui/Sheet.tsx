@@ -5,7 +5,7 @@ import { Dialog as SheetPrimitive } from 'radix-ui';
 import * as React from 'react';
 
 import { Button } from './Button';
-import { cn } from '../../lib/utils/tailwindMerge';
+import { cn } from '@/shared/lib/utils/tailwindMerge';
 
 function Sheet({ ...props }: React.ComponentProps<typeof SheetPrimitive.Root>) {
   return <SheetPrimitive.Root data-slot='sheet' {...props} />;

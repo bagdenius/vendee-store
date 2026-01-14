@@ -8,10 +8,9 @@ import {
 import StoreEventCard from './StoreEventCard';
 
 const mockEvents = [
-  // { id: 1, text: 'Here You will get what you want', isMain: true },
   {
     id: '6e60c137-5010-465f-a484-37e41de274e7',
-    text: 'The GOAT device and some text that i write here to test text wrapping on that component',
+    text: 'The GOAT device and some long text that i write here to test text wrapping on that component',
   },
   {
     id: '12fc2e41-ecf6-432a-be58-8e36a795dd8d',
@@ -23,7 +22,7 @@ const mockEvents = [
   },
   {
     id: '88285d96-bcfc-4041-9158-0d1bf07a8d43',
-    text: "Don't be scared of that sale",
+    text: "Don't be scared of that SALE",
   },
   {
     id: 'a79fb937-ba00-49e9-85a0-8b57c9f784d9',

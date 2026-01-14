@@ -2,23 +2,23 @@ import { Heart, ShoppingCart } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { Button } from '../../../shared/components/ui/Button';
+import { Button } from '@/shared/components/ui/Button';
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from '../../../shared/components/ui/Card';
+} from '@/shared/components/ui/Card';
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from '../../../shared/components/ui/Carousel';
-import { Rating, RatingButton } from '../../../shared/components/ui/Rating';
-import { getRandomNumber } from '../../../shared/lib/utils/getRandomNumber';
+} from '@/shared/components/ui/Carousel';
+import { Rating, RatingButton } from '@/shared/components/ui/Rating';
+import { getRandomNumber } from '@/shared/lib/utils/getRandomNumber';
 
 import { TProductCard } from '../types/product';
 

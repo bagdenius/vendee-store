@@ -6,7 +6,7 @@ import {
 import * as React from 'react';
 
 import { Button } from './Button';
-import { cn } from '../../lib/utils/tailwindMerge';
+import { cn } from '@/shared/lib/utils/tailwindMerge';
 
 function Pagination({ className, ...props }: React.ComponentProps<'nav'>) {
   return (

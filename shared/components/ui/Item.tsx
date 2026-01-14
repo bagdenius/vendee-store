@@ -3,7 +3,7 @@ import { Slot } from 'radix-ui';
 import * as React from 'react';
 
 import { Separator } from './Separator';
-import { cn } from '../../lib/utils/tailwindMerge';
+import { cn } from '@/shared/lib/utils/tailwindMerge';
 
 function ItemGroup({ className, ...props }: React.ComponentProps<'div'>) {
   return (

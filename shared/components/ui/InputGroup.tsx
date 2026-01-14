@@ -6,7 +6,7 @@ import * as React from 'react';
 import { Button } from './Button';
 import { Input } from './Input';
 import { Textarea } from './Textarea';
-import { cn } from '../../lib/utils/tailwindMerge';
+import { cn } from '@/shared/lib/utils/tailwindMerge';
 
 function InputGroup({ className, ...props }: React.ComponentProps<'div'>) {
   return (

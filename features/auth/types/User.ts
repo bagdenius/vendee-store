@@ -1,6 +1,6 @@
 import { SignUpWithPasswordCredentials, User } from '@supabase/supabase-js';
 
-import { Database } from '../../../shared/types/database.types';
+import { Database } from '@/shared/types/database.types';
 
 export type { User };
 export type Profile = Database['public']['Tables']['profiles']['Row'];

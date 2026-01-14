@@ -1,4 +1,4 @@
-import { createSupabaseServerClient } from '../../../shared/lib/supabase/server';
+import { createSupabaseServerClient } from '@/shared/lib/supabase/server';
 
 import { ProfileInsert, User, UserProfile } from '../types/User';
 

@@ -1,16 +1,16 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { LoginForm } from '../../features/auth/components/LoginForm';
-import { SignupForm } from '../../features/auth/components/SignupForm';
-import { ThemeToggle } from '../../features/theme/components/ThemeToggle';
-import RandomImageFadeCarousel from '../../shared/components/ui/RandomImageFadeCarousel';
+import { LoginForm } from '@/features/auth/components/LoginForm';
+import { SignupForm } from '@/features/auth/components/SignupForm';
+import { ThemeToggle } from '@/features/theme/components/ThemeToggle';
+import RandomImageFadeCarousel from '@/shared/components/ui/RandomImageFadeCarousel';
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from '../../shared/components/ui/Tabs';
+} from '@/shared/components/ui/Tabs';
 
 import logo from '@/public/logo.png';
 

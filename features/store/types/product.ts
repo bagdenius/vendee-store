@@ -1,4 +1,4 @@
-import { Database } from '../../../shared/types/database.types';
+import { Database } from '@/shared/types/database.types';
 
 export type Product = Database['public']['Tables']['products']['Row'];
 export type TProductCard = Product & {

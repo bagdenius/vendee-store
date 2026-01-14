@@ -5,7 +5,7 @@ import { useMemo } from 'react';
 
 import { Label } from './Label';
 import { Separator } from './Separator';
-import { cn } from '../../lib/utils/tailwindMerge';
+import { cn } from '@/shared/lib/utils/tailwindMerge';
 
 function FieldSet({ className, ...props }: React.ComponentProps<'fieldset'>) {
   return (

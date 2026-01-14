@@ -4,7 +4,7 @@ import { Provider, SignUpWithPasswordCredentials } from '@supabase/supabase-js';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
-import { createSupabaseServerClient } from '../../../shared/lib/supabase/server';
+import { createSupabaseServerClient } from '@/shared/lib/supabase/server';
 
 import { loginSchema, LoginSchema } from '../types/LoginSchema';
 import { signupSchema, SignupSchema } from '../types/SignupSchema';

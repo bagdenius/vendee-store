@@ -15,7 +15,7 @@ import {
 import Link from 'next/link';
 import * as React from 'react';
 
-import { UserProfile } from '../../../features/auth/types/User';
+import { UserProfile } from '@/features/auth/types/User';
 import { NavMain } from './NavMain';
 import { NavProjects } from './NavProjects';
 import { NavSecondary } from './NavSecondary';

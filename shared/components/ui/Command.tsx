@@ -12,7 +12,7 @@ import {
   DialogTitle,
 } from './Dialog';
 import { InputGroup, InputGroupAddon } from './InputGroup';
-import { cn } from '../../lib/utils/tailwindMerge';
+import { cn } from '@/shared/lib/utils/tailwindMerge';
 
 function Command({
   className,

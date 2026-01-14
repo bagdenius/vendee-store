@@ -1,4 +1,4 @@
-import { cn } from '../../lib/utils/tailwindMerge';
+import { cn } from '@/shared/lib/utils/tailwindMerge';
 
 function Kbd({ className, ...props }: React.ComponentProps<'kbd'>) {
   return (

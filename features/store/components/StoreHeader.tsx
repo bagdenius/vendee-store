@@ -2,7 +2,7 @@
 
 import { SidebarIcon } from 'lucide-react';
 
-import { ThemeToggle } from '../../theme/components/ThemeToggle';
+import { ThemeToggle } from '@/features/theme/components/ThemeToggle';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -10,11 +10,11 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from '../../../shared/components/ui/Breadcrumb';
-import { Button } from '../../../shared/components/ui/Button';
-import { SearchForm } from '../../../shared/components/ui/SearchForm';
-import { Separator } from '../../../shared/components/ui/Separator';
-import { useSidebar } from '../../../shared/components/ui/Sidebar';
+} from '@/shared/components/ui/Breadcrumb';
+import { Button } from '@/shared/components/ui/Button';
+import { SearchForm } from '@/shared/components/ui/SearchForm';
+import { Separator } from '@/shared/components/ui/Separator';
+import { useSidebar } from '@/shared/components/ui/Sidebar';
 
 export function StoreHeader() {
   const { toggleSidebar } = useSidebar();

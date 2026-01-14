@@ -6,8 +6,9 @@ import useEmblaCarousel, {
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 import * as React from 'react';
 
+import { cn } from '@/shared/lib/utils/tailwindMerge';
+
 import { Button } from './Button';
-import { cn } from '../../lib/utils/tailwindMerge';
 
 type CarouselApi = UseEmblaCarouselType[1];
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>;

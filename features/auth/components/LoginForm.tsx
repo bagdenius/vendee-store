@@ -2,24 +2,21 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Provider } from '@supabase/supabase-js';
-import Link from 'next/link';
 import { MouseEvent } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
-import { Button } from '../../../shared/components/ui/Button';
+import { Button } from '@/shared/components/ui/Button';
 import {
   Field,
-  FieldDescription,
   FieldError,
   FieldGroup,
   FieldLabel,
   FieldSeparator,
-  FieldTitle,
-} from '../../../shared/components/ui/Field';
-import { Input } from '../../../shared/components/ui/Input';
-import { Spinner } from '../../../shared/components/ui/Spinner';
-import { cn } from '../../../shared/lib/utils/tailwindMerge';
+} from '@/shared/components/ui/Field';
+import { Input } from '@/shared/components/ui/Input';
+import { Spinner } from '@/shared/components/ui/Spinner';
+import { cn } from '@/shared/lib/utils/tailwindMerge';
 
 import { login, signInWithProvider } from '../services/auth';
 import { loginSchema, LoginSchema } from '../types/LoginSchema';

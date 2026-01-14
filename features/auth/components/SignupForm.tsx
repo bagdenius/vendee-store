@@ -1,14 +1,13 @@
 'use client';
 
-import { cn } from '../../../shared/lib/utils/tailwindMerge';
+import { cn } from '@/shared/lib/utils/tailwindMerge';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Provider } from '@supabase/supabase-js';
-import Link from 'next/link';
 import { MouseEvent } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
-import { Button } from '../../../shared/components/ui/Button';
+import { Button } from '@/shared/components/ui/Button';
 import {
   Field,
   FieldDescription,
@@ -16,9 +15,9 @@ import {
   FieldGroup,
   FieldLabel,
   FieldSeparator,
-} from '../../../shared/components/ui/Field';
-import { Input } from '../../../shared/components/ui/Input';
-import { Spinner } from '../../../shared/components/ui/Spinner';
+} from '@/shared/components/ui/Field';
+import { Input } from '@/shared/components/ui/Input';
+import { Spinner } from '@/shared/components/ui/Spinner';
 
 import { signInWithProvider, signup } from '../services/auth';
 import { signupSchema, SignupSchema } from '../types/SignupSchema';

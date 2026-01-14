@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
 import React from 'react';
 
-import { createSupabaseServerClient } from '../../shared/lib/supabase/server';
+import { createSupabaseServerClient } from '@/shared/lib/supabase/server';
 
 export default async function AuthLayout({
   children,

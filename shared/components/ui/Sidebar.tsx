@@ -17,8 +17,8 @@ import {
 } from './Sheet';
 import { Skeleton } from './Skeleton';
 import { Tooltip, TooltipContent, TooltipTrigger } from './Tooltip';
-import { useIsMobile } from '../../hooks/use-mobile';
-import { cn } from '../../lib/utils/tailwindMerge';
+import { useIsMobile } from '@/shared/hooks/use-mobile';
+import { cn } from '@/shared/lib/utils/tailwindMerge';
 
 const SIDEBAR_COOKIE_NAME = 'sidebar_state';
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;

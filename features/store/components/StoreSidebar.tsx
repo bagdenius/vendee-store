@@ -1,10 +1,8 @@
 'use client';
 
 import {
-  AxeIcon,
   BookOpen,
   Bot,
-  Command,
   Frame,
   Info,
   LifeBuoy,
@@ -18,21 +16,19 @@ import {
 import Link from 'next/link';
 import * as React from 'react';
 
-import { UserProfile } from '../../auth/types/User';
-import { Button } from '../../../shared/components/ui/Button';
-import { NavMain } from '../../../shared/components/ui/NavMain';
-import { NavProjects } from '../../../shared/components/ui/NavProjects';
-import { NavSecondary } from '../../../shared/components/ui/NavSecondary';
-import { NavUser } from '../../../shared/components/ui/NavUser';
+import { UserProfile } from '@/features/auth/types/User';
+import { Button } from '@/shared/components/ui/Button';
+import { NavMain } from '@/shared/components/ui/NavMain';
+import { NavProjects } from '@/shared/components/ui/NavProjects';
+import { NavSecondary } from '@/shared/components/ui/NavSecondary';
+import { NavUser } from '@/shared/components/ui/NavUser';
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
-  SidebarHeader,
   SidebarMenu,
-  SidebarMenuButton,
   SidebarMenuItem,
-} from '../../../shared/components/ui/Sidebar';
+} from '@/shared/components/ui/Sidebar';
 
 const dataMock = {
   navMain: [
@@ -167,7 +163,6 @@ export function StoreSidebar({ ...props }: StoreSidebarProps) {
 
   return (
     <Sidebar
-      collapsible='icon'
       className='top-(--header-height) h-[calc(100svh-var(--header-height))]!'
       {...props}
     >

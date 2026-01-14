@@ -14,7 +14,7 @@ import {
   useState,
 } from 'react';
 
-import { cn } from '../../lib/utils/tailwindMerge';
+import { cn } from '@/shared/lib/utils/tailwindMerge';
 
 type RatingContextValue = {
   value: number;
@@ -212,7 +212,7 @@ export const Rating = ({
         onMouseLeave={() => setHoverValue(null)}
         ref={containerRef}
         role='radiogroup'
-        {...(props as any)}
+        {...props}
       >
         {Children.map(children, (child, index) => {
           if (!child) {

@@ -11,7 +11,7 @@ import {
   InputGroupButton,
   InputGroupInput,
 } from './InputGroup';
-import { cn } from '../../lib/utils/tailwindMerge';
+import { cn } from '@/shared/lib/utils/tailwindMerge';
 
 const Combobox = ComboboxPrimitive.Root;
 
