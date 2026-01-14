@@ -21,7 +21,7 @@ export async function GET(request: Request) {
       // create user profile if doesn't exist
       const user = (await supabase.auth.getUser()).data.user;
       // console.log('USER', user);
-      if (!user) return NextResponse.redirect(`${origin}/auth/login`);
+      if (!user) return NextResponse.redirect(`${origin}/auth`);
       const userProfile = await getProfile(user.id);
       if (!userProfile) createProfileFromProviderUser(user);
 
@@ -37,5 +37,5 @@ export async function GET(request: Request) {
     }
   }
 
-  return NextResponse.redirect(`${origin}/auth/login`);
+  return NextResponse.redirect(`${origin}/auth`);
 }
