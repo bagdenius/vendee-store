@@ -3,7 +3,7 @@
 import type { AuthError } from '@supabase/supabase-js';
 import { objectToCamel } from 'ts-case-convert';
 
-import { getUser } from '@/shared/data/services/user/getUser';
+import { getUser } from '@/shared/data/services/auth/getUser';
 
 import type { BaseUser } from '../models';
 import { cache } from 'react';

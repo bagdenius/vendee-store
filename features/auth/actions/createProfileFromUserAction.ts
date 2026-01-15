@@ -2,7 +2,7 @@
 
 import { objectToSnake } from 'ts-case-convert';
 
-import { createProfile } from '@/shared/data/services/user/createProfileFromUser';
+import { createProfile } from '@/shared/data/services/auth/createProfileFromUser';
 
 import type { BaseUser, ProfileInsert } from '../models';
 
@@ -22,6 +22,6 @@ export async function createProfileFromUserAction(user: BaseUser) {
   // snakelize and shit
   const profileEntity = objectToSnake(profile);
   // insert profile
-  const error = await createProfile(profileEntity);
+  const { error } = await createProfile(profileEntity);
   if (error) throw new Error(`Failed to create profile: ${error.message}`);
 }
