@@ -16,7 +16,6 @@ import {
 import Link from 'next/link';
 import * as React from 'react';
 
-import { UserProfile } from '@/features/auth/types/User';
 import { Button } from '@/shared/components/ui/Button';
 import { NavMain } from '@/shared/components/ui/NavMain';
 import { NavProjects } from '@/shared/components/ui/NavProjects';
@@ -29,6 +28,8 @@ import {
   SidebarMenu,
   SidebarMenuItem,
 } from '@/shared/components/ui/Sidebar';
+
+import type { UserProfile } from '@/features/auth/models';
 
 const dataMock = {
   navMain: [
@@ -155,12 +156,10 @@ const dataMock = {
 };
 
 type StoreSidebarProps = React.ComponentProps<typeof Sidebar> & {
-  user: UserProfile | null;
+  userProfile: UserProfile | null;
 };
 
-export function StoreSidebar({ ...props }: StoreSidebarProps) {
-  const user = props.user;
-
+export function StoreSidebar({ userProfile, ...props }: StoreSidebarProps) {
   return (
     <Sidebar
       className='top-(--header-height) h-[calc(100svh-var(--header-height))]!'
@@ -200,8 +199,8 @@ export function StoreSidebar({ ...props }: StoreSidebarProps) {
         <NavSecondary items={dataMock.navSecondary} className='mt-auto' />
       </SidebarContent>
       <SidebarFooter>
-        {user ? (
-          <NavUser user={user} />
+        {userProfile ? (
+          <NavUser userProfile={userProfile} />
         ) : (
           <SidebarMenu>
             <SidebarMenuItem className='text-center'>

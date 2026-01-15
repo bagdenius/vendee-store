@@ -18,8 +18,9 @@ import { Input } from '@/shared/components/ui/Input';
 import { Spinner } from '@/shared/components/ui/Spinner';
 import { cn } from '@/shared/lib/utils/tailwindMerge';
 
-import { login, signInWithProvider } from '../services/auth';
-import { loginSchema, LoginSchema } from '../types/LoginSchema';
+import { loginSchema, LoginSchema } from '../models/signInSchema';
+import { loginAction } from '../actions/loginAction';
+import { loginWithProviderAction } from '../actions/loginWithProviderAction';
 
 export function LoginForm({
   className,
@@ -38,7 +39,7 @@ export function LoginForm({
   });
 
   async function onSubmit(data: LoginSchema) {
-    const { error, validationErrors } = await login(data);
+    const { loginError, validationErrors } = await loginAction(data);
     if (validationErrors) {
       return Object.entries(validationErrors).forEach(([field, message]) => {
         setError(field as keyof LoginSchema, {
@@ -47,8 +48,8 @@ export function LoginForm({
         });
       });
     }
-    if (error)
-      return toast.warning(error.message, {
+    if (loginError)
+      return toast.warning(loginError.message, {
         description: 'Try another credentials or provider',
         action: { label: 'Got it!', onClick: () => {} },
       });
@@ -62,8 +63,8 @@ export function LoginForm({
     provider: Provider
   ) {
     event.preventDefault();
-    const { error } = await signInWithProvider(provider);
-    if (error) return toast.error(error.message);
+    await loginWithProviderAction(provider);
+    // if (error) return toast.error(error.message);
     // Need transition or some kind of client handling to show that
     toast.success(`You successfully logged in with ${provider}`);
     reset();

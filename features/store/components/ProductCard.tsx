@@ -20,13 +20,13 @@ import {
 import { Rating, RatingButton } from '@/shared/components/ui/Rating';
 import { getRandomNumber } from '@/shared/lib/utils/getRandomNumber';
 
-import { TProductCard } from '../types/product';
+import type { Product } from '../models/product';
 
-export default async function ProductCard({
-  product,
-}: {
-  product: TProductCard;
-}) {
+type ProductCardProps = {
+  product: Product;
+};
+
+export default async function ProductCard({ product }: ProductCardProps) {
   const testRating = getRandomNumber(3, 5);
   const testRatingCount = getRandomNumber(50, 500);
 
@@ -34,7 +34,7 @@ export default async function ProductCard({
     <Card className='pt-0 bg-muted/69 hover:ring-2 group hover:ring-accent transition-shadow'>
       <Carousel>
         <CarouselContent className='ml-0'>
-          {product.product_images.map((image, i) => (
+          {product.images.map((image, i) => (
             <CarouselItem key={image.id} className='p-0'>
               <Link
                 href={`store/product/${product.slug}`}

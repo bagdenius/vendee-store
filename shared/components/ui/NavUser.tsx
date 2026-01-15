@@ -9,8 +9,7 @@ import {
   Sparkles,
 } from 'lucide-react';
 
-import { signout } from '@/features/auth/services/auth';
-import { UserProfile } from '@/features/auth/types/User';
+import { signoutAction } from '@/features/auth/actions/signoutAction';
 import { Avatar, AvatarFallback, AvatarImage } from './Avatar';
 import {
   DropdownMenu,
@@ -28,7 +27,13 @@ import {
   useSidebar,
 } from './Sidebar';
 
-export function NavUser({ user }: { user: UserProfile }) {
+import type { UserProfile } from '@/features/auth/models';
+
+type NavUserProps = {
+  userProfile: UserProfile;
+};
+
+export function NavUser({ userProfile }: NavUserProps) {
   const { isMobile } = useSidebar();
 
   return (
@@ -41,12 +46,17 @@ export function NavUser({ user }: { user: UserProfile }) {
               className='data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground'
             >
               <Avatar className='h-8 w-8 rounded-lg'>
-                <AvatarImage src={user.avatar!} alt={user.full_name!} />
+                <AvatarImage
+                  src={userProfile.avatar!}
+                  alt={userProfile.fullName!}
+                />
                 <AvatarFallback className='rounded-lg'>CN</AvatarFallback>
               </Avatar>
               <div className='grid flex-1 text-left text-sm leading-tight'>
-                <span className='truncate font-medium'>{user.full_name}</span>
-                <span className='truncate text-xs'>{user.email}</span>
+                <span className='truncate font-medium'>
+                  {userProfile.fullName}
+                </span>
+                <span className='truncate text-xs'>{userProfile.email}</span>
               </div>
               <ChevronsUpDown className='ml-auto size-4' />
             </SidebarMenuButton>
@@ -60,12 +70,17 @@ export function NavUser({ user }: { user: UserProfile }) {
             <DropdownMenuLabel className='p-0 font-normal'>
               <div className='flex items-center gap-2 px-1 py-1.5 text-left text-sm'>
                 <Avatar className='h-8 w-8 rounded-lg'>
-                  <AvatarImage src={user.avatar!} alt={user.full_name!} />
+                  <AvatarImage
+                    src={userProfile.avatar!}
+                    alt={userProfile.fullName!}
+                  />
                   <AvatarFallback className='rounded-lg'>CN</AvatarFallback>
                 </Avatar>
                 <div className='grid flex-1 text-left text-sm leading-tight'>
-                  <span className='truncate font-medium'>{user.full_name}</span>
-                  <span className='truncate text-xs'>{user.email}</span>
+                  <span className='truncate font-medium'>
+                    {userProfile.fullName}
+                  </span>
+                  <span className='truncate text-xs'>{userProfile.email}</span>
                 </div>
               </div>
             </DropdownMenuLabel>
@@ -92,7 +107,7 @@ export function NavUser({ user }: { user: UserProfile }) {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={signout}>
+            <DropdownMenuItem onClick={signoutAction}>
               <LogOut />
               Sign out
             </DropdownMenuItem>

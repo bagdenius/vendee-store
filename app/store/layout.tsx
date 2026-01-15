@@ -1,4 +1,4 @@
-import { getUserProfile } from '@/features/auth/services/user';
+import { getUserProfileAction } from '@/features/auth/actions/getUserProfileAction';
 import { StoreHeader } from '@/features/store/components/StoreHeader';
 import { StoreSidebar } from '@/features/store/components/StoreSidebar';
 import { SidebarInset, SidebarProvider } from '@/shared/components/ui/Sidebar';
@@ -12,15 +12,13 @@ export default async function StoreLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const user = await getUserProfile();
-
+  const { userProfile } = await getUserProfileAction();
   return (
     <div className='[--header-height:calc(--spacing(14))]'>
       <SidebarProvider className='flex flex-col'>
-        {/* <SidebarProvider className='flex flex-col max-h-svh overflow-y-auto overflow-x-hidden no-scrollbar'> */}
         <StoreHeader />
         <div className='flex flex-1'>
-          <StoreSidebar user={user} />
+          <StoreSidebar userProfile={userProfile} />
           <SidebarInset>{children}</SidebarInset>
         </div>
       </SidebarProvider>

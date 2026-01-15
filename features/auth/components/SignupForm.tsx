@@ -19,8 +19,9 @@ import {
 import { Input } from '@/shared/components/ui/Input';
 import { Spinner } from '@/shared/components/ui/Spinner';
 
-import { signInWithProvider, signup } from '../services/auth';
-import { signupSchema, SignupSchema } from '../types/SignupSchema';
+import { signupSchema, SignupSchema } from '../models/signUpSchema';
+import { signupAction } from '../actions/signupAction';
+import { loginWithProviderAction } from '../actions/loginWithProviderAction';
 
 export function SignupForm({
   className,
@@ -43,8 +44,8 @@ export function SignupForm({
   });
 
   async function onSubmit(data: SignupSchema) {
-    const { error } = await signup(data);
-    if (error) return toast.error(error.message);
+    const { validationErrors } = await signupAction(data);
+    if (validationErrors) return toast.error(validationErrors.message);
     reset();
   }
 
@@ -53,8 +54,8 @@ export function SignupForm({
     provider: Provider
   ) {
     event.preventDefault();
-    const { error } = await signInWithProvider(provider);
-    if (error) return toast.error(error.message);
+    await loginWithProviderAction(provider);
+    // if (error) return toast.error(error.message);
     reset();
   }
 

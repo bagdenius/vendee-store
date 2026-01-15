@@ -1,9 +1,8 @@
 import { NextResponse } from 'next/server';
 
-import {
-  createProfileFromProviderUser,
-  getProfile,
-} from '@/features/auth/services/user';
+import { createProfileFromUserAction } from '@/features/auth/actions/createProfileFromUserAction';
+import { getProfileAction } from '@/features/auth/actions/getProfileAction';
+import { getUserAction } from '@/features/auth/actions/getUserAction';
 import { createSupabaseServerClient } from '@/shared/lib/supabase/server';
 
 export async function GET(request: Request) {
@@ -13,18 +12,15 @@ export async function GET(request: Request) {
   if (!next.startsWith('/')) {
     next = '/';
   }
-
   if (code) {
     const supabase = await createSupabaseServerClient();
     const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) {
       // create user profile if doesn't exist
-      const user = (await supabase.auth.getUser()).data.user;
-      // console.log('USER', user);
+      const { user } = await getUserAction();
       if (!user) return NextResponse.redirect(`${origin}/auth`);
-      const userProfile = await getProfile(user.id);
-      if (!userProfile) createProfileFromProviderUser(user);
-
+      const { profile } = await getProfileAction(user.id);
+      if (!profile) createProfileFromUserAction(user);
       const forwardedHost = request.headers.get('x-forwarded-host');
       const isLocalEnv = process.env.NODE_ENV === 'development';
       if (isLocalEnv) {
@@ -36,6 +32,5 @@ export async function GET(request: Request) {
       }
     }
   }
-
   return NextResponse.redirect(`${origin}/auth`);
 }
