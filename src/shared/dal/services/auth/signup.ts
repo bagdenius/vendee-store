@@ -2,24 +2,22 @@ import 'server-only';
 
 import type {
   AuthError,
-  Session,
   SignUpWithPasswordCredentials,
 } from '@supabase/supabase-js';
+import { objectToCamel } from 'ts-case-convert';
 
 import { createSupabaseServerClient } from '@/shared/lib/supabase/server';
 
-import type { BaseUserEntity } from '@/shared/dal/entities';
+import type { User } from '@/shared/dal/entities';
 
 export async function signup(
   credentials: SignUpWithPasswordCredentials
 ): Promise<{
-  data: {
-    user: BaseUserEntity | null;
-    session: Session | null;
-  };
+  user: User | null;
   error: AuthError | null;
 }> {
   const supabase = await createSupabaseServerClient();
   const { data, error } = await supabase.auth.signUp(credentials);
-  return { data, error };
+  const camelized = data.user && (objectToCamel(data.user) as User);
+  return { user: camelized, error };
 }

@@ -4,8 +4,7 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
 import { login } from '@/shared/dal/services/auth/login';
-
-import { loginSchema, LoginSchema } from '../models';
+import { loginSchema, type LoginSchema } from '../schemas/signInSchema';
 
 export async function loginAction(formData: LoginSchema) {
   // validation
@@ -27,7 +26,7 @@ export async function loginAction(formData: LoginSchema) {
       };
     return { loginError };
   }
-  // revalidate/redirect
+  // revalidate/redirect - MOVE TO CLIENT ROUTER
   revalidatePath('/', 'layout');
   redirect('/');
 }

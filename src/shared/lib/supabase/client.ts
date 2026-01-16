@@ -1,6 +1,6 @@
 import { createBrowserClient } from '@supabase/ssr';
 
-import { Database } from '@/shared/dal/entities/database.types';
+import { Database } from '@/shared/dal/database.types';
 
 export function createSupabaseBrowserClient() {
   return createBrowserClient<Database>(

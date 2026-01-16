@@ -19,7 +19,7 @@ import {
 import { Input } from '@/shared/components/ui/Input';
 import { Spinner } from '@/shared/components/ui/Spinner';
 
-import { signupSchema, SignupSchema } from '../models/signUpSchema';
+import { signupSchema, SignupSchema } from '../schemas/signUpSchema';
 import { signupAction } from '../actions/signupAction';
 import { loginWithProviderAction } from '../actions/loginWithProviderAction';
 
@@ -44,8 +44,9 @@ export function SignupForm({
   });
 
   async function onSubmit(data: SignupSchema) {
-    const { validationErrors } = await signupAction(data);
+    const { validationErrors, error } = await signupAction(data);
     if (validationErrors) return toast.error(validationErrors.message);
+    if (error) return toast.error(error.message);
     reset();
   }
 
@@ -54,8 +55,8 @@ export function SignupForm({
     provider: Provider
   ) {
     event.preventDefault();
-    await loginWithProviderAction(provider);
-    // if (error) return toast.error(error.message);
+    const { error } = await loginWithProviderAction(provider);
+    if (error) return toast.error(error.message);
     reset();
   }
 

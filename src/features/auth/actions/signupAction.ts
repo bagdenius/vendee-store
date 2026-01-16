@@ -3,12 +3,9 @@
 import type { SignUpWithPasswordCredentials } from '@supabase/supabase-js';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import { objectToCamel } from 'ts-case-convert';
 
 import { signup } from '@/shared/dal/services/auth/signup';
-import { createProfileFromUserAction } from './createProfileFromUserAction';
-
-import { signupSchema, SignupSchema } from '../models';
+import { signupSchema, type SignupSchema } from '../schemas/signUpSchema';
 
 export async function signupAction(formData: SignupSchema) {
   // server validation
@@ -19,30 +16,17 @@ export async function signupAction(formData: SignupSchema) {
     );
     return { validationErrors };
   }
-  // build credentials
+  // build sign up credentials
   const credentials: SignUpWithPasswordCredentials = {
     email: formData.email,
     password: formData.password,
-    options: {
-      data: {
-        username: formData.email,
-        full_name: formData.fullName,
-        email: formData.email,
-        role: 'user',
-        avatar: '',
-      },
-    },
   };
   // sign up
-  const { data, error: signupError } = await signup(credentials);
+  const { user, error: signupError } = await signup(credentials);
   // signup error handle
-  if (signupError) throw new Error(`Failed to sign up: ${signupError.message}`);
-  if (!data.user) throw new Error('Failed to get user while signing up');
-  // camelize and shit
-  const user = objectToCamel(data.user);
-  // create user profile
-  await createProfileFromUserAction(user);
-  // revalidate/redirect
+  if (signupError) return { error: signupError };
+  if (!user) throw new Error('Failed to get user while signing up');
+  // revalidate/redirect - MOVE TO CLIENT ROUTER
   revalidatePath('/', 'layout');
   redirect('/');
 }

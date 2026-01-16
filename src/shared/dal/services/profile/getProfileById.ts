@@ -1,20 +1,22 @@
 import 'server-only';
 
 import type { PostgrestError } from '@supabase/supabase-js';
+import { objectToCamel } from 'ts-case-convert';
 
 import { createSupabaseServerClient } from '@/shared/lib/supabase/server';
 
-import type { ProfileEntity } from '@/shared/dal/entities';
+import type { Profile } from '@/shared/dal/entities';
 
-export async function getProfile(userId: string): Promise<{
-  data: ProfileEntity | null;
+export async function getProfileById(id: string): Promise<{
+  profile: Profile | null;
   error: PostgrestError | null;
 }> {
   const supabase = await createSupabaseServerClient();
   const { data, error } = await supabase
     .from('profiles')
     .select('*')
-    .eq('id', userId)
+    .eq('id', id)
     .single();
-  return { data, error };
+  const camelized = data && (objectToCamel(data) as Profile);
+  return { profile: camelized, error };
 }

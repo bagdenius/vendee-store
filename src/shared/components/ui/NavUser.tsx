@@ -10,7 +10,6 @@ import {
   User,
 } from 'lucide-react';
 
-import { signoutAction } from '@/features/auth/actions/signoutAction';
 import { Avatar, AvatarFallback, AvatarImage } from './Avatar';
 import {
   DropdownMenu,
@@ -28,11 +27,12 @@ import {
   useSidebar,
 } from './Sidebar';
 
-import type { Profile } from '@/features/auth/models';
 import { use } from 'react';
 import { AuthError, PostgrestError } from '@supabase/supabase-js';
 import { Button } from './Button';
 import Link from 'next/link';
+import { Profile } from '@/shared/dal/entities';
+import { signoutAction } from '@/features/auth/actions/signoutAction';
 
 type NavUserProps = {
   profilePromise: Promise<{

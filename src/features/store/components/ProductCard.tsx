@@ -19,8 +19,7 @@ import {
 } from '@/shared/components/ui/Carousel';
 import { Rating, RatingButton } from '@/shared/components/ui/Rating';
 import { getRandomNumber } from '@/shared/lib/utils/getRandomNumber';
-
-import type { Product } from '../models/product';
+import { Product } from '@/shared/dal/entities';
 
 type ProductCardProps = {
   product: Product;

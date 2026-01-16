@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "update-types": "npx supabase gen types --lang=typescript --project-id \"llwedkywjjlauduymnhr\" > ./shared/data/entities/database.types.ts"
+    "update-types": "npx supabase gen types --lang=typescript --project-id \"llwedkywjjlauduymnhr\" > ./src/shared/dal/database.types.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.0.0",

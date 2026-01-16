@@ -1,7 +1,7 @@
-import { getCurrentUserProfileAction } from '@/features/auth/actions/getCurrentUserProfileAction';
 import { StoreHeader } from '@/features/store/components/StoreHeader';
 import { StoreSidebar } from '@/features/store/components/StoreSidebar';
 import { SidebarInset, SidebarProvider } from '@/shared/components/ui/Sidebar';
+import { getCurrentProfile } from '@/shared/dal/services/profile/getCurrentProfile';
 
 export const iframeHeight = '800px';
 
@@ -12,7 +12,7 @@ export default async function StoreLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const profilePromise = getCurrentUserProfileAction();
+  const profilePromise = getCurrentProfile();
 
   return (
     <div className='[--header-height:calc(--spacing(14))]'>

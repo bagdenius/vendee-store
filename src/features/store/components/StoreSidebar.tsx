@@ -11,12 +11,9 @@ import {
   Send,
   Settings2,
   SquareTerminal,
-  User,
 } from 'lucide-react';
-import Link from 'next/link';
 import * as React from 'react';
 
-import { Button } from '@/shared/components/ui/Button';
 import { NavMain } from '@/shared/components/ui/NavMain';
 import { NavProjects } from '@/shared/components/ui/NavProjects';
 import { NavSecondary } from '@/shared/components/ui/NavSecondary';
@@ -25,14 +22,12 @@ import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
-  SidebarMenu,
-  SidebarMenuItem,
 } from '@/shared/components/ui/Sidebar';
 
-import type { Profile, UserProfile } from '@/features/auth/models';
-import { Suspense } from 'react';
-import { AuthError, PostgrestError } from '@supabase/supabase-js';
 import { Skeleton } from '@/shared/components/ui/Skeleton';
+import { AuthError, PostgrestError } from '@supabase/supabase-js';
+import { Suspense } from 'react';
+import { Profile } from '@/shared/dal/entities';
 
 const dataMock = {
   navMain: [

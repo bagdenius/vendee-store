@@ -1,9 +1,8 @@
 import Link from 'next/link';
 
-import { getAllProductsAction } from '../actions/getAllProductsAction';
 import ProductCard from './ProductCard';
-import { Product } from '../models/product';
 import { Skeleton } from '@/shared/components/ui/Skeleton';
+import { getAllProducts } from '@/shared/dal/services/product/getAllProducts';
 
 // todo: change grid to carousel
 export default async function ProductListByCategory({
@@ -11,8 +10,7 @@ export default async function ProductListByCategory({
 }: {
   category: { id: string; name: string; slug: string };
 }) {
-  // todo: filter category in server action
-  const { products }: { products: Product[] } = await getAllProductsAction();
+  const { products, error } = await getAllProducts();
   const filtered = products?.filter((p) =>
     p.categories.some(
       (c: { id: string; name: string; slug: string }) => c.id === category.id

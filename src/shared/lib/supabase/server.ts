@@ -1,7 +1,7 @@
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 
-import { Database } from '@/shared/dal/entities/database.types';
+import { Database } from '@/shared/dal/database.types';
 
 export async function createSupabaseServerClient() {
   const cookieStore = await cookies();

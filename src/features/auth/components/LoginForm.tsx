@@ -18,7 +18,7 @@ import { Input } from '@/shared/components/ui/Input';
 import { Spinner } from '@/shared/components/ui/Spinner';
 import { cn } from '@/shared/lib/utils/tailwindMerge';
 
-import { loginSchema, LoginSchema } from '../models/signInSchema';
+import { loginSchema, LoginSchema } from '../schemas/signInSchema';
 import { loginAction } from '../actions/loginAction';
 import { loginWithProviderAction } from '../actions/loginWithProviderAction';
 

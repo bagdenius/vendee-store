@@ -28,7 +28,7 @@ export async function loginWithProviderAction(provider: Provider) {
     throw new Error(`Failed to sign in with OAuth provider: ${error.message}`);
   if (!data.url)
     throw new Error('OAuth provider did not return a redirect URL');
-  // revalidate/redirect
+  // revalidate/redirect - MOVE TO CLIENT ROUTER
   revalidatePath('/', 'layout');
   redirect(data.url);
 }

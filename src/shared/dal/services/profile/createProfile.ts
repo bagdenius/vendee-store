@@ -4,10 +4,11 @@ import type { PostgrestError } from '@supabase/supabase-js';
 
 import { createSupabaseServerClient } from '@/shared/lib/supabase/server';
 
-import type { ProfileInsertEntity } from '@/shared/dal/entities';
+import type { ProfileInsert } from '@/shared/dal/entities';
 
+// WARNING: I THINK PROFILE SHOULD BE SNAKELIZED
 export async function createProfile(
-  profile: ProfileInsertEntity
+  profile: ProfileInsert
 ): Promise<{ error: PostgrestError | null }> {
   const supabase = await createSupabaseServerClient();
   const { error } = await supabase.from('profiles').insert(profile);
