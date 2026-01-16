@@ -1,4 +1,4 @@
-'server-only';
+import 'server-only';
 
 import type { PostgrestError } from '@supabase/supabase-js';
 

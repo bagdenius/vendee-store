@@ -1,4 +1,4 @@
-'server-only';
+import 'server-only';
 
 import type { AuthError } from '@supabase/supabase-js';
 
