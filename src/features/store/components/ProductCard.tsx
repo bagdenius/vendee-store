@@ -31,7 +31,7 @@ export default async function ProductCard({ product }: ProductCardProps) {
   const testRatingCount = getRandomNumber(50, 500);
 
   return (
-    <Card className='pt-0 bg-muted/69 hover:ring-2 group hover:ring-accent transition-shadow'>
+    <Card className='pt-0 h-140 bg-muted/69 hover:ring-2 group hover:ring-accent transition-shadow'>
       <Carousel>
         <CarouselContent className='ml-0'>
           {product.images.map((image, i) => (
@@ -58,11 +58,15 @@ export default async function ProductCard({ product }: ProductCardProps) {
           ))}
         </CarouselContent>
         <CarouselPrevious
-          className='left-1'
+          className='group-hover:left-1'
           variant='secondary'
           size='icon-lg'
         />
-        <CarouselNext className='right-1' variant='secondary' size='icon-lg' />
+        <CarouselNext
+          className='group-hover:right-1'
+          variant='secondary'
+          size='icon-lg'
+        />
       </Carousel>
       <CardHeader className='-mt-4'>
         <CardTitle className='text-xl hover:underline underline-offset-2 transition-all'>

@@ -1,9 +1,10 @@
 import { Suspense } from 'react';
 
 import { getAllCategoriesAction } from '@/features/store/actions/getAllCategoriesAction';
-import ProductListByCategory from '@/features/store/components/ProductListByCategory';
+import ProductListByCategory, {
+  ProductListByCategorySkeleton,
+} from '@/features/store/components/ProductListByCategory';
 import StoreEventsList from '@/features/store/components/StoreEventsList';
-import { Spinner } from '@/shared/components/ui/Spinner';
 
 export default async function StoreHomePage() {
   const { categories } = await getAllCategoriesAction();
@@ -15,7 +16,7 @@ export default async function StoreHomePage() {
         categories.map((category) => (
           <Suspense
             key={category.id}
-            fallback={<Spinner className='self-center mt-10 size-20' />}
+            fallback={<ProductListByCategorySkeleton />}
           >
             <ProductListByCategory category={category} />
           </Suspense>

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { getAllProductsAction } from '../actions/getAllProductsAction';
 import ProductCard from './ProductCard';
 import { Product } from '../models/product';
+import { Skeleton } from '@/shared/components/ui/Skeleton';
 
 // todo: change grid to carousel
 export default async function ProductListByCategory({
@@ -36,6 +37,19 @@ export default async function ProductListByCategory({
       <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4'>
         {filtered?.map((product) => (
           <ProductCard key={product.id} product={product} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export async function ProductListByCategorySkeleton() {
+  return (
+    <div className='flex flex-1 flex-col gap-3'>
+      <Skeleton className='w-25 h-8' />
+      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4'>
+        {Array.from({ length: 5 }).map((_, i) => (
+          <Skeleton key={i} className='w-full h-140 mb-2' />
         ))}
       </div>
     </div>
