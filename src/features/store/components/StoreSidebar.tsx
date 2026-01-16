@@ -29,7 +29,10 @@ import {
   SidebarMenuItem,
 } from '@/shared/components/ui/Sidebar';
 
-import type { UserProfile } from '@/features/auth/models';
+import type { Profile, UserProfile } from '@/features/auth/models';
+import { Suspense } from 'react';
+import { AuthError, PostgrestError } from '@supabase/supabase-js';
+import { Skeleton } from '@/shared/components/ui/Skeleton';
 
 const dataMock = {
   navMain: [
@@ -156,10 +159,13 @@ const dataMock = {
 };
 
 type StoreSidebarProps = React.ComponentProps<typeof Sidebar> & {
-  userProfile: UserProfile | null;
+  profilePromise: Promise<{
+    profile: Profile | null;
+    error: AuthError | PostgrestError | null;
+  }>;
 };
 
-export function StoreSidebar({ userProfile, ...props }: StoreSidebarProps) {
+export function StoreSidebar({ profilePromise, ...props }: StoreSidebarProps) {
   return (
     <Sidebar
       className='top-(--header-height) h-[calc(100svh-var(--header-height))]!'
@@ -199,20 +205,9 @@ export function StoreSidebar({ userProfile, ...props }: StoreSidebarProps) {
         <NavSecondary items={dataMock.navSecondary} className='mt-auto' />
       </SidebarContent>
       <SidebarFooter>
-        {userProfile ? (
-          <NavUser userProfile={userProfile} />
-        ) : (
-          <SidebarMenu>
-            <SidebarMenuItem className='text-center'>
-              <Button variant='link' asChild>
-                <Link href='/auth'>
-                  <User />
-                  <span>Log in to your account</span>
-                </Link>
-              </Button>
-            </SidebarMenuItem>
-          </SidebarMenu>
-        )}
+        <Suspense fallback={<Skeleton className='h-12' />}>
+          <NavUser profilePromise={profilePromise} />
+        </Suspense>
       </SidebarFooter>
     </Sidebar>
   );

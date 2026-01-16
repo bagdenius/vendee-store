@@ -52,7 +52,7 @@ export default function AuthPage() {
           </div>
         </div>
         <div className='bg-muted relative hidden overflow-hidden lg:block'>
-          <RandomImageFadeCarousel />
+          {/* <RandomImageFadeCarousel /> */}
         </div>
       </div>
     </>
