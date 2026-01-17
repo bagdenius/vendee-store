@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { LoginForm } from '@/features/auth/components/LoginForm';
 import { SignupForm } from '@/features/auth/components/SignupForm';
 import { ThemeToggle } from '@/features/theme/components/ThemeToggle';
-import RandomImageFadeCarousel from '@/shared/components/ui/RandomImageFadeCarousel';
 import {
   Tabs,
   TabsContent,

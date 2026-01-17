@@ -1,5 +1,3 @@
-import RandomImageFadeCarousel from '@/shared/components/ui/RandomImageFadeCarousel';
-
 export default function StoreEventCard({
   event,
 }: {

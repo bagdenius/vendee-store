@@ -1,6 +1,5 @@
 'use client';
 
-import { cn } from '@/shared/lib/utils/tailwindMerge';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Provider } from '@supabase/supabase-js';
 import { MouseEvent } from 'react';
@@ -18,12 +17,10 @@ import {
 } from '@/shared/components/ui/Field';
 import { Input } from '@/shared/components/ui/Input';
 import { Spinner } from '@/shared/components/ui/Spinner';
-
-import { signupSchema, SignupSchema } from '../schemas/signUpSchema';
-import { signupAction } from '../actions/signupAction';
+import { cn } from '@/shared/lib/utils/tailwindMerge';
 import { loginWithProviderAction } from '../actions/loginWithProviderAction';
-import Link from 'next/link';
-import { TabsList, TabsTrigger } from '@/shared/components/ui/Tabs';
+import { signupAction } from '../actions/signupAction';
+import { signupSchema, type SignupSchema } from '../schemas/signUpSchema';
 
 export function SignupForm({
   className,

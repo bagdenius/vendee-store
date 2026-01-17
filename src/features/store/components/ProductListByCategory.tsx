@@ -1,8 +1,8 @@
 import Link from 'next/link';
 
-import ProductCard from './ProductCard';
 import { Skeleton } from '@/shared/components/ui/Skeleton';
 import { getAllProducts } from '@/shared/dal/services/product/getAllProducts';
+import ProductCard from './ProductCard';
 
 // todo: change grid to carousel
 export default async function ProductListByCategory({
