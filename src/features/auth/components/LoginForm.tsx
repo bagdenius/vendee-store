@@ -27,7 +27,7 @@ export function LoginForm({
   ...props
 }: React.ComponentProps<'form'>) {
   const [isPending, startTransition] = useTransition();
-  const { handleSubmit, reset, setError, control } = useForm<LoginSchema>({
+  const { control, handleSubmit, reset, setError } = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
     defaultValues: { email: '', password: '' },
   });
@@ -45,7 +45,14 @@ export function LoginForm({
 
   async function onSubmit(data: LoginSchema) {
     startTransition(async () => {
-      const { loginError, validationErrors } = await loginAction(data);
+      const { user, loginError, validationErrors } = await loginAction(data);
+      if (loginError) {
+        toast.warning(loginError.message, {
+          description: 'Try another credentials or use provider',
+          action: { label: 'Got it!', onClick: () => {} },
+        });
+        return;
+      }
       if (validationErrors) {
         return Object.entries(validationErrors).forEach(([field, message]) => {
           setError(field as keyof LoginSchema, {
@@ -54,16 +61,12 @@ export function LoginForm({
           });
         });
       }
-      if (loginError) {
-        toast.warning(loginError.message, {
-          description: 'Try another credentials or provider',
-          action: { label: 'Got it!', onClick: () => {} },
-        });
-        return;
-      }
       // router.push('/');
+      const metaName: string =
+        user?.userMetadata.name || user?.userMetadata.fullName;
+      const name = metaName.trim().split(' ').at(0);
       toast.success('You successfully logged in', {
-        description: 'Happy shopping!',
+        description: `${name && `${name}, `}Welcome and Happy shopping!`,
         action: { label: 'Got it!', onClick: () => {} },
       });
       reset();
@@ -122,9 +125,9 @@ export function LoginForm({
               <Input
                 {...field}
                 id='email'
-                aria-invalid={fieldState.invalid}
                 type='email'
                 placeholder='type@your.email'
+                aria-invalid={fieldState.invalid}
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
@@ -153,15 +156,14 @@ export function LoginForm({
               <Input
                 {...field}
                 id='password'
-                aria-invalid={fieldState.invalid}
                 type='password'
                 placeholder='••••••••'
+                aria-invalid={fieldState.invalid}
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
         />
-
         <Field>
           <Button type='submit' disabled={isPending}>
             {isPending ? <Spinner /> : 'Login'}
@@ -172,7 +174,12 @@ export function LoginForm({
           <Button
             variant='outline'
             type='button'
-            onClick={() => toast.error('Apple sign-in not implemented yet.')}
+            onClick={() =>
+              toast.warning('Apple sign-in not implemented yet', {
+                description: 'But we work on it :)',
+                action: { label: 'Got it!', onClick: () => {} },
+              })
+            }
             disabled={isPending}
           >
             {isPending ? (
