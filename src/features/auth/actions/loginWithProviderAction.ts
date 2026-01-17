@@ -4,13 +4,11 @@ import type {
   Provider,
   SignInWithOAuthCredentials,
 } from '@supabase/supabase-js';
-import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
 
 import { loginWithProvider } from '@/shared/dal/services/auth/loginWithProvider';
+import { redirect } from 'next/navigation';
 
 export async function loginWithProviderAction(provider: Provider) {
-  // build credentials
   const credentials: SignInWithOAuthCredentials = {
     provider,
     options: {
@@ -21,14 +19,7 @@ export async function loginWithProviderAction(provider: Provider) {
       },
     },
   };
-  // login
   const { data, error } = await loginWithProvider(credentials);
-  // error handling
-  if (error)
-    throw new Error(`Failed to sign in with OAuth provider: ${error.message}`);
-  if (!data.url)
-    throw new Error('OAuth provider did not return a redirect URL');
-  // revalidate/redirect - MOVE TO CLIENT ROUTER
-  revalidatePath('/', 'layout');
-  redirect(data.url);
+  if (data.url) redirect(data.url);
+  return { data, error };
 }

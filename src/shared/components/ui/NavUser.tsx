@@ -1,5 +1,7 @@
 'use client';
 
+import { signoutAction } from '@/features/auth/actions/signoutAction';
+import { AuthError, PostgrestError } from '@supabase/supabase-js';
 import {
   BadgeCheck,
   Bell,
@@ -9,8 +11,10 @@ import {
   Sparkles,
   User,
 } from 'lucide-react';
-
+import Link from 'next/link';
+import { use } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from './Avatar';
+import { Button } from './Button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,12 +31,7 @@ import {
   useSidebar,
 } from './Sidebar';
 
-import { use } from 'react';
-import { AuthError, PostgrestError } from '@supabase/supabase-js';
-import { Button } from './Button';
-import Link from 'next/link';
-import { Profile } from '@/shared/dal/entities';
-import { signoutAction } from '@/features/auth/actions/signoutAction';
+import type { Profile } from '@/shared/dal/entities';
 
 type NavUserProps = {
   profilePromise: Promise<{

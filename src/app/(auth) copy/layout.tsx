@@ -10,5 +10,6 @@ export default async function AuthLayout({
 }>) {
   const { user } = await getUser();
   if (user) redirect('/');
+
   return children;
 }

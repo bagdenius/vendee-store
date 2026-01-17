@@ -12,9 +12,7 @@ import {
   TabsTrigger,
 } from '@/shared/components/ui/Tabs';
 
-// import logo from '../../../public/logo.png';
-
-export default function AuthPage() {
+export default async function AuthPage() {
   return (
     <>
       <div className='absolute right-5 top-5 z-1'>
@@ -32,6 +30,7 @@ export default function AuthPage() {
               src='/logo.png'
               alt='vendee logo'
               draggable={false}
+              sizes='200px'
             />
           </Link>
           <div className='flex flex-1 items-center justify-center'>

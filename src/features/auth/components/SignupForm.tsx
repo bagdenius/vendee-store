@@ -22,6 +22,8 @@ import { Spinner } from '@/shared/components/ui/Spinner';
 import { signupSchema, SignupSchema } from '../schemas/signUpSchema';
 import { signupAction } from '../actions/signupAction';
 import { loginWithProviderAction } from '../actions/loginWithProviderAction';
+import Link from 'next/link';
+import { TabsList, TabsTrigger } from '@/shared/components/ui/Tabs';
 
 export function SignupForm({
   className,
@@ -55,8 +57,8 @@ export function SignupForm({
     provider: Provider
   ) {
     event.preventDefault();
-    const { error } = await loginWithProviderAction(provider);
-    if (error) return toast.error(error.message);
+    await loginWithProviderAction(provider);
+    // if (error) return toast.error(error.message);
     reset();
   }
 
@@ -181,12 +183,6 @@ export function SignupForm({
             <span className='sr-only'>Login with GitHub</span>
           </Button>
         </Field>
-        {/* <FieldDescription className='text-center'>
-          Already have an account?{' '}
-          <Link href='/auth/login' className='underline underline-offset-4'>
-            Sign in
-          </Link>
-        </FieldDescription> */}
       </FieldGroup>
     </form>
   );
