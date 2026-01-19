@@ -18,6 +18,7 @@ import {
 import { Input } from '@/shared/components/ui/Input';
 import { Spinner } from '@/shared/components/ui/Spinner';
 import { cn } from '@/shared/lib/utils/tailwindMerge';
+import { useRouter } from 'next/navigation';
 import { loginAction } from '../actions/loginAction';
 import { loginWithProviderAction } from '../actions/loginWithProviderAction';
 import { loginSchema, type LoginSchema } from '../schemas/signInSchema';
@@ -31,6 +32,7 @@ export function LoginForm({
     resolver: zodResolver(loginSchema),
     defaultValues: { email: '', password: '' },
   });
+  const router = useRouter();
 
   useEffect(() => {
     const hash = window.location.hash;
@@ -61,12 +63,12 @@ export function LoginForm({
           });
         });
       }
-      // router.push('/');
+      // router.push('/?auth=success');
       const metaName: string =
         user?.userMetadata.name || user?.userMetadata.fullName;
       const name = metaName.trim().split(' ').at(0);
       toast.success('You successfully logged in', {
-        description: `${name && `${name}, `}Welcome and Happy shopping!`,
+        description: `${name && `${name}, `}welcome and happy shopping!`,
         action: { label: 'Got it!', onClick: () => {} },
       });
       reset();
@@ -75,7 +77,7 @@ export function LoginForm({
 
   async function handleSignInWithProvider(
     event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
-    provider: Provider
+    provider: Provider,
   ) {
     event.preventDefault();
     startTransition(async () => {

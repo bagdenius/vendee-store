@@ -16,7 +16,7 @@ export default async function StoreLayout({
 
   return (
     <div className='[--header-height:calc(--spacing(14))]'>
-      <SidebarProvider className='flex flex-col'>
+      <SidebarProvider className='flex flex-col' defaultOpen={false}>
         <StoreHeader />
         <div className='flex flex-1'>
           <StoreSidebar profilePromise={profilePromise} />

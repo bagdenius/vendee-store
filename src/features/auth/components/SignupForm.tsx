@@ -80,7 +80,7 @@ export function SignupForm({
 
   async function handleSignUpWithProvider(
     event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
-    provider: Provider
+    provider: Provider,
   ) {
     event.preventDefault();
     startTransition(async () => {

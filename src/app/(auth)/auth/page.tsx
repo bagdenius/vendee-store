@@ -10,49 +10,51 @@ import {
   TabsList,
   TabsTrigger,
 } from '@/shared/components/ui/Tabs';
+import RandomImageFadeCarousel from '@/shared/components/ui/RandomImageFadeCarousel';
+import { ScrollArea, ScrollBar } from '@/shared/components/ui/ScrollArea';
 
 export default async function AuthPage() {
   return (
-    <>
-      <div className='absolute right-5 top-5 z-1'>
-        <ThemeToggle />
-      </div>
-      <div className='grid min-h-svh lg:grid-cols-2'>
-        <div className='flex relative max-h-svh flex-col gap-4 p-6 md:p-10 overflow-y-auto no-scrollbar'>
-          <Link
-            href='/'
-            className='absolute self-center w-50 aspect-5/1 md:right-20 lg:right-10'
-          >
-            <Image
-              fill
-              className='object-contain'
-              src='/logo.png'
-              alt='vendee logo'
-              draggable={false}
-              sizes='200px'
-            />
-          </Link>
-          <div className='flex flex-1 items-center justify-center'>
-            <div className='w-full max-w-xs'>
-              <Tabs defaultValue='login'>
-                <TabsList className='mx-auto md:absolute md:top-5 md:left-5'>
-                  <TabsTrigger value='login'>Login</TabsTrigger>
-                  <TabsTrigger value='signup'>Sign up</TabsTrigger>
-                </TabsList>
-                <TabsContent value='login'>
-                  <LoginForm />
-                </TabsContent>
-                <TabsContent value='signup'>
-                  <SignupForm />
-                </TabsContent>
-              </Tabs>
+    <div className='grid lg:grid-cols-2 h-svh'>
+      <main className='relative'>
+        <Tabs defaultValue='login' className='absolute w-full h-full'>
+          <header className='flex items-center justify-between p-4 flex-wrap sm:flex-nowrap gap-x-100 gap-y-4 sm:gap-0'>
+            <div className='flex flex-1 gap-2 items-center justify-between sm:order-last sm:flex-0'>
+              <Link href='/' className='relative w-50 aspect-5/1'>
+                <Image
+                  fill
+                  className='object-contain'
+                  src='/logo.png'
+                  alt='vendee logo'
+                  draggable={false}
+                  sizes='200px'
+                />
+              </Link>
+              <div className='lg:fixed top-5 right-5'>
+                <ThemeToggle />
+              </div>
             </div>
-          </div>
-        </div>
-        <div className='bg-muted relative hidden overflow-hidden lg:block'>
-          {/* <RandomImageFadeCarousel /> */}
-        </div>
-      </div>
-    </>
+            <TabsList className='flex-1 min-w-50 sm:max-w-fit'>
+              <TabsTrigger value='login'>Login</TabsTrigger>
+              <TabsTrigger value='signup'>Sign up</TabsTrigger>
+            </TabsList>
+          </header>
+          <ScrollArea className='overflow-hidden no-scrollbar'>
+            <div className='w-full max-w-sm mx-auto px-5 pt-10 pb-20'>
+              <TabsContent value='login'>
+                <LoginForm />
+              </TabsContent>
+              <TabsContent value='signup'>
+                <SignupForm />
+              </TabsContent>
+            </div>
+            <ScrollBar />
+          </ScrollArea>
+        </Tabs>
+      </main>
+      <aside className='bg-muted relative hidden overflow-hidden lg:block -z-1'>
+        <RandomImageFadeCarousel />
+      </aside>
+    </div>
   );
 }

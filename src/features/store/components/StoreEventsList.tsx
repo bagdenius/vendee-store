@@ -1,5 +1,10 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+
 import {
   Carousel,
+  CarouselApi,
   CarouselContent,
   CarouselItem,
   CarouselNext,
@@ -33,21 +38,72 @@ const mockEvents = [
     id: '07c0bd54-3a47-439e-a6b6-a3528ca62e95',
     text: 'We have something for you',
   },
+  {
+    id: '07c0bd54-3a47-439e-a6b6-a3528ca62e91',
+    text: 'Hey hey hey',
+  },
+  {
+    id: '07c0bd54-3a47-439e-a6b6-a3528ca62e92',
+    text: "I don't know what i'm doing",
+  },
 ];
 
-// todo: bug fix: something is pushing the carousel width so the block overlows
 export default function StoreEventsList() {
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!api) return;
+    function updateCarousel() {
+      setCount(api!.scrollSnapList().length);
+      setCurrent(api!.selectedScrollSnap() + 1);
+    }
+    const handleSelect = () => updateCarousel();
+    const handleReInit = () => updateCarousel();
+    updateCarousel();
+    api.on('select', handleSelect);
+    api.on('reInit', handleReInit);
+    return () => {
+      api.off('select', handleSelect);
+      api.off('reInit', handleReInit);
+    };
+  }, [api]);
+
+  function handleScrollToButtonClick(to: number) {
+    if (!api) return;
+    api.scrollTo(to);
+  }
+
   return (
-    <Carousel>
-      <CarouselContent>
-        {mockEvents.map((event) => (
-          <CarouselItem key={event.id} className='lg:basis-1/2 xl:basis-1/3'>
-            <StoreEventCard event={event} />
-          </CarouselItem>
+    <div>
+      <Carousel
+        setApi={setApi}
+        opts={{ slidesToScroll: 'auto', loop: true }}
+        className='mb-3'
+      >
+        <CarouselContent className='p-0.5'>
+          {mockEvents.map((event) => (
+            <CarouselItem
+              key={event.id}
+              className='w-full md:basis-1/2 xl:basis-1/3'
+            >
+              <StoreEventCard event={event} />
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious variant='default' className='hidden left-1' />
+        <CarouselNext variant='default' className='hidden right-1' />
+      </Carousel>
+      <div className='flex gap-1.5 justify-center items-center cursor-pointer'>
+        {[...Array(count)].map((_, i) => (
+          <div
+            key={i + 1}
+            className={`w-20 h-2 rounded-xs origin-center transition-all ease-in-out duration-500 ${i + 1 === current ? 'bg-primary scale-y-115' : 'bg-muted scale-y-100'}`}
+            onClick={() => handleScrollToButtonClick(i)}
+          />
         ))}
-      </CarouselContent>
-      <CarouselPrevious variant='default' className='left-1' />
-      <CarouselNext variant='default' className='right-1' />
-    </Carousel>
+      </div>
+    </div>
   );
 }

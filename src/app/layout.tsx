@@ -5,6 +5,7 @@ import { ThemeProvider } from '@/features/theme/components/ThemeProvider';
 import { Toaster } from '@/shared/components/ui/Sonner';
 
 import '@/shared/styles/globals.css';
+import DebugViewportSizeLabel from '@/shared/components/DebugViewportSizeLabel';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -34,6 +35,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <DebugViewportSizeLabel />
         <ThemeProvider attribute='class' defaultTheme='dark' enableSystem>
           <Toaster position='top-center' />
           {children}

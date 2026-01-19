@@ -12,7 +12,7 @@ export async function loginWithProviderAction(provider: Provider) {
   const credentials: SignInWithOAuthCredentials = {
     provider,
     options: {
-      redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/auth/callback`,
+      redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/auth/callback?provider=${provider}`,
       queryParams: {
         access_type: 'offline',
         prompt: 'consent',
