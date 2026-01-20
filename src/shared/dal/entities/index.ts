@@ -7,4 +7,4 @@ export * from './product';
 export * from './productCategory';
 export * from './productImage';
 export * from './profile';
-export * from './user';
+export * from './auth';
