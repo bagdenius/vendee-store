@@ -9,6 +9,7 @@ const generateRandomImageUrl = () => `${photoUrl}${generateRandomId()}`;
 const fadeDuration = 10000;
 
 export default function RandomImageFadeCarousel() {
+  return null;
   const [images, setImages] = useState(() => [
     generateRandomImageUrl(),
     generateRandomImageUrl(),

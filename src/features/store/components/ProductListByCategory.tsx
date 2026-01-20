@@ -69,17 +69,12 @@ export default function ProductListByCategory({
           href={`category/${category.slug}`}
           className='inline-flex group hover:underline'
         >
-          <span>{category.name} </span>
+          <span>{category.name}</span>
           <span className='opacity-0 -translate-x-5 transition-transform duration-200 ease-out group-hover:opacity-100 group-hover:translate-x-0'>
             &nbsp;&rarr;
           </span>
         </Link>
       </h3>
-      {/* <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4'>
-        {filtered?.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-      </div> */}
       <div>
         <Carousel
           setApi={setApi}
@@ -90,7 +85,7 @@ export default function ProductListByCategory({
             {filtered?.map((product) => (
               <CarouselItem
                 key={product.id}
-                className='sm:basis-1/2 md:basis-1/3 lg:basis-1/3 xl:basis-1/4 2xl:basis-1/5'
+                className='sm:basis-1/2 md:basis-1/2 lg:basis-1/3 xl:basis-1/4 2xl:basis-1/5'
               >
                 <ProductCard product={product} />
               </CarouselItem>

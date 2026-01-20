@@ -46,11 +46,11 @@ export default function ProductCard({ product }: ProductCardProps) {
                   alt={`${product.title} image ${image.sortOrder}`}
                   className='object-contain'
                   sizes='90vw,
-                        (min-width: 40rem) 45vw,
-                        (min-width: 48rem) 42vw,
-                        (min-width: 64rem) 30vw,
-                        (min-width: 80rem) 22vw,
-                        (min-width: 96rem) 18vw'
+                        (min-width: 40rem) 44vw,
+                        (min-width: 48rem) 45vw,
+                        (min-width: 64rem) 23vw,
+                        (min-width: 80rem) 18vw,
+                        (min-width: 96rem) 19vw'
                 />
               </Link>
             </CarouselItem>
@@ -68,14 +68,11 @@ export default function ProductCard({ product }: ProductCardProps) {
         />
       </Carousel>
       <CardHeader>
-        <CardTitle className='text-2xl sm:text-xl group-hover/product-card:scale-x-105 hover:underline underline-offset-3 transition duration-300 origin-left'>
-          <Link
-            href={`store/product/${product.slug}`}
-            className='inline-flex items-center'
-          >
-            {product.title}
-            <span className='opacity-0 group-hover/product-card:opacity-100 -translate-x-10 group-hover/product-card:translate-x-0 transition duration-200 delay-100'>
-              &nbsp;{'->'}
+        <CardTitle className='max-w-[94%] text-2xl sm:text-xl group-hover/product-card:scale-x-105 hover:underline underline-offset-3 transition duration-300 origin-left'>
+          <Link href={`store/product/${product.slug}`} className=''>
+            <span className='inline line-clamp-2'>{product.title}&nbsp;</span>
+            <span className='absolute inline text-nowrap opacity-0 group-hover/product-card:opacity-100 -translate-x-5 group-hover/product-card:translate-x-0 transition duration-200 delay-100'>
+              {'->'}
             </span>
           </Link>
         </CardTitle>
