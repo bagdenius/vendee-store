@@ -12,22 +12,18 @@ import {
   Settings2,
   SquareTerminal,
 } from 'lucide-react';
-import * as React from 'react';
+import { Suspense } from 'react';
 
 import { NavMain } from '@/shared/components/ui/NavMain';
 import { NavProjects } from '@/shared/components/ui/NavProjects';
 import { NavSecondary } from '@/shared/components/ui/NavSecondary';
-import { NavUser } from '@/shared/components/ui/NavUser';
+import { NavUser, NavUserSkeleton } from '@/shared/components/ui/NavUser';
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
 } from '@/shared/components/ui/Sidebar';
-
-import { Skeleton } from '@/shared/components/ui/Skeleton';
-import { AuthError, PostgrestError } from '@supabase/supabase-js';
-import { Suspense } from 'react';
-import { Profile } from '@/shared/dal/entities';
+import type { ProfileResult } from '@/shared/dal/entities';
 
 const dataMock = {
   navMain: [
@@ -154,13 +150,13 @@ const dataMock = {
 };
 
 type StoreSidebarProps = React.ComponentProps<typeof Sidebar> & {
-  profilePromise: Promise<{
-    profile: Profile | null;
-    error: AuthError | PostgrestError | null;
-  }>;
+  profileResultPromise: Promise<ProfileResult>;
 };
 
-export function StoreSidebar({ profilePromise, ...props }: StoreSidebarProps) {
+export function StoreSidebar({
+  profileResultPromise: profilePromise,
+  ...props
+}: StoreSidebarProps) {
   return (
     <Sidebar
       className='top-(--header-height) h-[calc(100svh-var(--header-height))]!'
@@ -200,7 +196,7 @@ export function StoreSidebar({ profilePromise, ...props }: StoreSidebarProps) {
         <NavSecondary items={dataMock.navSecondary} className='mt-auto' />
       </SidebarContent>
       <SidebarFooter>
-        <Suspense fallback={<Skeleton className='h-12' />}>
+        <Suspense fallback={<NavUserSkeleton />}>
           <NavUser profilePromise={profilePromise} />
         </Suspense>
       </SidebarFooter>

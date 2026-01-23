@@ -10,9 +10,9 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/shared/components/ui/Carousel';
-import StoreEventCard from './StoreEventCard';
+import PromoCard from './PromoCard';
 
-const mockEvents = [
+const mockPromos = [
   {
     id: '6e60c137-5010-465f-a484-37e41de274e7',
     text: 'The GOAT device and some long text that i write here to test text wrapping on that component',
@@ -48,7 +48,7 @@ const mockEvents = [
   },
 ];
 
-export default function StoreEventsList() {
+export default function PromoSection() {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
@@ -83,12 +83,12 @@ export default function StoreEventsList() {
         className='mb-3'
       >
         <CarouselContent className='p-0.5'>
-          {mockEvents.map((event) => (
+          {mockPromos.map((event) => (
             <CarouselItem
               key={event.id}
               className='w-full md:basis-1/2 xl:basis-1/3'
             >
-              <StoreEventCard event={event} />
+              <PromoCard event={event} />
             </CarouselItem>
           ))}
         </CarouselContent>

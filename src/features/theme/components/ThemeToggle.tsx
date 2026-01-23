@@ -11,7 +11,7 @@ export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
 
   function handleThemeToggle(
-    event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
+    event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
   ) {
     event.preventDefault();
     if (theme === 'dark') {

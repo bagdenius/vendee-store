@@ -1,16 +1,13 @@
 import 'server-only';
 
-import type { PostgrestError } from '@supabase/supabase-js';
-
-import { createSupabaseServerClient } from '@/shared/lib/supabase/server';
+import { objectToCamel, objectToSnake } from 'ts-case-convert';
 
 import type { ProfileInsert } from '@/shared/dal/entities';
+import { createSupabaseServerClient } from '@/shared/lib/supabase/server';
 
-// WARNING: I THINK PROFILE SHOULD BE SNAKELIZED
-export async function createProfile(
-  profile: ProfileInsert
-): Promise<{ error: PostgrestError | null }> {
+export async function createProfile(profile: ProfileInsert) {
   const supabase = await createSupabaseServerClient();
-  const { error } = await supabase.from('profiles').insert(profile);
-  return { error };
+  const data = await supabase.from('profiles').insert(objectToSnake(profile));
+  if (data.error) return { error: data.error };
+  return { data: objectToCamel(data) };
 }

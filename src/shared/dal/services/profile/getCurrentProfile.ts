@@ -1,17 +1,15 @@
 import 'server-only';
 
-import type { AuthError, PostgrestError } from '@supabase/supabase-js';
-import { getProfileById } from './getProfileById';
+import { cache } from 'react';
+
+import type { ProfileResult } from '@/shared/dal/entities';
 import { getUser } from '../auth/getUser';
+import { getProfileById } from './getProfileById';
 
-import type { Profile } from '@/shared/dal/entities';
-
-export async function getCurrentProfile(): Promise<{
-  profile: Profile | null;
-  error: AuthError | PostgrestError | null;
-}> {
-  const { user, error: userError } = await getUser();
-  if (!user) return { profile: null, error: userError };
-  const { profile, error: profileError } = await getProfileById(user.id);
-  return { profile, error: profileError };
-}
+export const getCurrentProfile = cache(async (): Promise<ProfileResult> => {
+  const { data: user, error: userError } = await getUser();
+  if (userError) return { error: userError };
+  const { data: profile, error: profileError } = await getProfileById(user.id);
+  if (profileError) return { error: profileError };
+  return { data: profile };
+});

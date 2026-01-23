@@ -1,7 +1,5 @@
 'use client';
 
-import { signoutAction } from '@/features/auth/actions/signoutAction';
-import { AuthError, PostgrestError } from '@supabase/supabase-js';
 import {
   BadgeCheck,
   Bell,
@@ -13,6 +11,11 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { use } from 'react';
+import { toast } from 'sonner';
+
+import { signoutAction } from '@/features/auth/actions/signoutAction';
+import type { ProfileResult } from '@/shared/dal/entities';
+
 import { Avatar, AvatarFallback, AvatarImage } from './Avatar';
 import { Button } from './Button';
 import {
@@ -30,21 +33,46 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from './Sidebar';
-
-import type { Profile } from '@/shared/dal/entities';
+import { Skeleton } from './Skeleton';
 
 type NavUserProps = {
-  profilePromise: Promise<{
-    profile: Profile | null;
-    error: AuthError | PostgrestError | null;
-  }>;
+  profilePromise: Promise<ProfileResult>;
 };
 
 export function NavUser({ profilePromise }: NavUserProps) {
   const { isMobile } = useSidebar();
-  const { profile } = use(profilePromise);
+  const { data: profile, error } = use(profilePromise);
 
-  return profile ? (
+  async function handleLogout() {
+    const { error } = await signoutAction();
+    if (error) {
+      toast.warning(error.message, {
+        description: 'Try again :)',
+        action: { label: 'Got it!', onClick: () => {} },
+      });
+      return;
+    }
+    toast.success('You successfully logged out', {
+      description: "Hope you'll come back again :)",
+      action: { label: 'Got it!', onClick: () => {} },
+    });
+  }
+
+  if (error)
+    return (
+      <SidebarMenu className='min-h-12'>
+        <SidebarMenuItem className='text-center'>
+          <Button variant='link' asChild>
+            <Link href='/auth'>
+              <User />
+              <span>Log in to your account</span>
+            </Link>
+          </Button>
+        </SidebarMenuItem>
+      </SidebarMenu>
+    );
+
+  return (
     <SidebarMenu>
       <SidebarMenuItem>
         <DropdownMenu>
@@ -107,7 +135,7 @@ export function NavUser({ profilePromise }: NavUserProps) {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={signoutAction}>
+            <DropdownMenuItem onClick={handleLogout}>
               <LogOut />
               Sign out
             </DropdownMenuItem>
@@ -115,18 +143,9 @@ export function NavUser({ profilePromise }: NavUserProps) {
         </DropdownMenu>
       </SidebarMenuItem>
     </SidebarMenu>
-  ) : (
-    <SidebarMenu className='min-h-12'>
-      <SidebarMenuItem className='text-center'>
-        <Button variant='link' asChild>
-          <Link href='/auth'>
-            <User />
-            <span>Log in to your account</span>
-          </Link>
-        </Button>
-      </SidebarMenuItem>
-    </SidebarMenu>
   );
 }
 
-export function NavUserSkeleton() {}
+export function NavUserSkeleton() {
+  return <Skeleton className='h-12' />;
+}

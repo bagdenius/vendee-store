@@ -1,7 +1,7 @@
 import RandomImageFadeCarousel from '@/shared/components/ui/RandomImageFadeCarousel';
 import Link from 'next/link';
 
-export default function StoreEventCard({
+export default function PromoCard({
   event,
 }: {
   event: { id: string; text: string };

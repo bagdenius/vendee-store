@@ -8,7 +8,8 @@ export default async function AuthLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { user } = await getUser();
+  const { data: user, error } = await getUser();
+  if (error) console.log(error);
   if (user) redirect('/');
   return children;
 }

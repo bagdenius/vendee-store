@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Provider } from '@supabase/supabase-js';
 import Link from 'next/link';
-import { MouseEvent, useEffect, useTransition } from 'react';
+import { useEffect, useTransition } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
@@ -18,22 +18,23 @@ import {
 import { Input } from '@/shared/components/ui/Input';
 import { Spinner } from '@/shared/components/ui/Spinner';
 import { cn } from '@/shared/lib/utils/tailwindMerge';
-import { useRouter } from 'next/navigation';
 import { loginAction } from '../actions/loginAction';
-import { loginWithProviderAction } from '../actions/loginWithProviderAction';
+import { loginWithOAuthAction } from '../actions/loginWithOAuthAction';
 import { loginSchema, type LoginSchema } from '../schemas/signInSchema';
+import { getProfileById } from '@/shared/dal/services/profile/getProfileById';
+import { useProfile } from '@/shared/dal/hooks/profile/useProfile';
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<'form'>) {
   const [isPending, startTransition] = useTransition();
-  const { control, handleSubmit, reset, setError } = useForm<LoginSchema>({
+  const { control, handleSubmit, setError } = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
     defaultValues: { email: '', password: '' },
   });
-  const router = useRouter();
 
+  // todo: dry
   useEffect(() => {
     const hash = window.location.hash;
     if (hash.includes('error=access_denied')) {
@@ -45,16 +46,11 @@ export function LoginForm({
     }
   }, []);
 
-  async function onSubmit(data: LoginSchema) {
+  async function handleLoginWithPassword(data: LoginSchema) {
     startTransition(async () => {
-      const { user, loginError, validationErrors } = await loginAction(data);
-      if (loginError) {
-        toast.warning(loginError.message, {
-          description: 'Try another credentials or use provider',
-          action: { label: 'Got it!', onClick: () => {} },
-        });
-        return;
-      }
+      // todo: use weak password in toast or something to inform user about weakness reason
+      const { user, weakPassword, validationErrors, loginError } =
+        await loginAction(data);
       if (validationErrors) {
         return Object.entries(validationErrors).forEach(([field, message]) => {
           setError(field as keyof LoginSchema, {
@@ -63,25 +59,28 @@ export function LoginForm({
           });
         });
       }
+      if (loginError || !user) {
+        toast.warning(loginError.message, {
+          description: 'Try another credentials or use OAuth',
+          action: { label: 'Got it!', onClick: () => {} },
+        });
+        return;
+      }
       // router.push('/?auth=success');
       const metaName: string =
         user?.userMetadata.name || user?.userMetadata.fullName;
       const name = metaName.trim().split(' ').at(0);
-      toast.success('You successfully logged in', {
-        description: `${name && `${name}, `}welcome and happy shopping!`,
+      toast.success('You successfully signed in', {
+        description: `${name && `${name}, `}Welcome and Happy shopping!`,
         action: { label: 'Got it!', onClick: () => {} },
       });
-      reset();
     });
   }
 
-  async function handleSignInWithProvider(
-    event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
-    provider: Provider,
-  ) {
-    event.preventDefault();
+  async function handleLoginWithOAuth(oauthProvider: Provider) {
     startTransition(async () => {
-      const { data, error } = await loginWithProviderAction(provider);
+      const { provider, url, error } =
+        await loginWithOAuthAction(oauthProvider);
       if (error) {
         toast.warning(error.message, {
           description: 'Try another credentials or provider',
@@ -89,25 +88,22 @@ export function LoginForm({
         });
         return;
       }
-      if (!data.url) {
-        toast.warning("Auth provider doesn't return redirect URL", {
-          description: 'Please try again',
-          action: { label: 'Got it!', onClick: () => {} },
-        });
+      if (!url) {
+        toast.warning(
+          `${provider.charAt(0).toUpperCase() + provider.slice(1)} OAuth provider doesn't return redirect URL`,
+          {
+            description: 'Please try again :)',
+            action: { label: 'Got it!', onClick: () => {} },
+          },
+        );
         return;
       }
-      // move that on after-auth page and check ?auth=success param
-      // toast.success(`You successfully logged in with ${provider}`, {
-      //   description: 'Happy shopping!',
-      //   action: { label: 'Got it!', onClick: () => {} },
-      // });
-      reset();
     });
   }
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(handleLoginWithPassword)}
       className={cn('flex flex-col gap-6', className)}
       {...props}
     >
@@ -130,6 +126,7 @@ export function LoginForm({
                 type='email'
                 placeholder='type@your.email'
                 aria-invalid={fieldState.invalid}
+                autoComplete='email'
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
@@ -161,6 +158,7 @@ export function LoginForm({
                 type='password'
                 placeholder='••••••••'
                 aria-invalid={fieldState.invalid}
+                autoComplete='current-password'
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
@@ -199,7 +197,7 @@ export function LoginForm({
           <Button
             variant='outline'
             type='button'
-            onClick={(event) => handleSignInWithProvider(event, 'google')}
+            onClick={() => handleLoginWithOAuth('google')}
             disabled={isPending}
           >
             {isPending ? (
@@ -217,7 +215,7 @@ export function LoginForm({
           <Button
             variant='outline'
             type='button'
-            onClick={(event) => handleSignInWithProvider(event, 'github')}
+            onClick={() => handleLoginWithOAuth('github')}
             disabled={isPending}
           >
             {isPending ? (

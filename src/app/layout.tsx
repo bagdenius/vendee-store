@@ -6,6 +6,7 @@ import { Toaster } from '@/shared/components/ui/Sonner';
 
 import '@/shared/styles/globals.css';
 import DebugViewportSizeLabel from '@/shared/components/DebugViewportSizeLabel';
+import { createProfile } from '@/shared/dal/services/profile/createProfile';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 

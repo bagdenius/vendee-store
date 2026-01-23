@@ -9,7 +9,7 @@ export async function signupAction(formData: SignupSchema) {
   const result = signupSchema.safeParse(formData);
   if (!result.success) {
     const validationErrors = Object.fromEntries(
-      result.error.issues.map((issue) => [issue.path[0], issue.message])
+      result.error.issues.map((issue) => [issue.path[0], issue.message]),
     );
     return { validationErrors };
   }
@@ -22,6 +22,7 @@ export async function signupAction(formData: SignupSchema) {
       },
     },
   };
-  const { user, error: signupError } = await signup(credentials);
-  return { user, signupError };
+  const { data, error: signupError } = await signup(credentials);
+  if (signupError) return { signupError };
+  return { user: data.user, session: data.session };
 }

@@ -1,8 +1,10 @@
 'use server';
 
 import { signout } from '@/shared/dal/services/auth/signout';
+import { AuthError } from '@supabase/supabase-js';
 
-export async function signoutAction() {
+export async function signoutAction(): Promise<{ error?: AuthError }> {
   const { error } = await signout();
-  if (error) throw new Error(`Failed to sign out: ${error.message}`);
+  if (error) return { error };
+  return { error: undefined };
 }

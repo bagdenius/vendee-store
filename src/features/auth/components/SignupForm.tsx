@@ -18,7 +18,7 @@ import {
 import { Input } from '@/shared/components/ui/Input';
 import { Spinner } from '@/shared/components/ui/Spinner';
 import { cn } from '@/shared/lib/utils/tailwindMerge';
-import { loginWithProviderAction } from '../actions/loginWithProviderAction';
+import { loginWithOAuthAction } from '../actions/loginWithOAuthAction';
 import { signupAction } from '../actions/signupAction';
 import { signupSchema, type SignupSchema } from '../schemas/signUpSchema';
 
@@ -27,7 +27,7 @@ export function SignupForm({
   ...props
 }: React.ComponentProps<'form'>) {
   const [isPending, startTransition] = useTransition();
-  const { control, handleSubmit, reset, setError } = useForm<SignupSchema>({
+  const { control, handleSubmit, setError } = useForm<SignupSchema>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
       fullName: '',
@@ -37,6 +37,7 @@ export function SignupForm({
     },
   });
 
+  // todo: dry
   useEffect(() => {
     const hash = window.location.hash;
     if (hash.includes('error=access_denied')) {
@@ -48,7 +49,7 @@ export function SignupForm({
     }
   }, []);
 
-  async function onSubmit(data: SignupSchema) {
+  async function handleSignup(data: SignupSchema) {
     startTransition(async () => {
       const { user, validationErrors, signupError } = await signupAction(data);
       if (signupError) {
@@ -74,17 +75,17 @@ export function SignupForm({
         description: `${name && `${name}, `}Welcome and Happy shopping!`,
         action: { label: 'Got it!', onClick: () => {} },
       });
-      reset();
     });
   }
 
-  async function handleSignUpWithProvider(
+  async function handleSignUpWithOAuth(
     event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
-    provider: Provider,
+    oauthProvider: Provider,
   ) {
     event.preventDefault();
     startTransition(async () => {
-      const { data, error } = await loginWithProviderAction(provider);
+      const { provider, url, error } =
+        await loginWithOAuthAction(oauthProvider);
       if (error) {
         toast.warning(error.message, {
           description: 'Try another credentials or provider',
@@ -92,14 +93,16 @@ export function SignupForm({
         });
         return;
       }
-      if (!data.url) {
-        toast.warning("Auth provider doesn't return redirect URL", {
-          description: 'Please try again',
-          action: { label: 'Got it!', onClick: () => {} },
-        });
+      if (!url) {
+        toast.warning(
+          `${provider.charAt(0).toUpperCase() + provider.slice(1)} auth provider doesn't return redirect URL`,
+          {
+            description: 'Please try again',
+            action: { label: 'Got it!', onClick: () => {} },
+          },
+        );
         return;
       }
-      reset();
     });
   }
 
@@ -107,7 +110,7 @@ export function SignupForm({
     <form
       className={cn('flex flex-col gap-6', className)}
       {...props}
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(handleSignup)}
     >
       <FieldGroup>
         <div className='flex flex-col items-center gap-1 text-center'>
@@ -128,6 +131,7 @@ export function SignupForm({
                 type='text'
                 placeholder='John Doe'
                 aria-invalid={fieldState.invalid}
+                autoComplete='name'
               />
               {fieldState.invalid ? (
                 <FieldError errors={[fieldState.error]} />
@@ -151,6 +155,7 @@ export function SignupForm({
                 type='email'
                 placeholder='type@your.email'
                 aria-invalid={fieldState.invalid}
+                autoComplete='email'
               />
               {fieldState.invalid ? (
                 <FieldError errors={[fieldState.error]} />
@@ -175,6 +180,7 @@ export function SignupForm({
                 type='password'
                 placeholder='••••••••'
                 aria-invalid={fieldState.invalid}
+                autoComplete='new-password'
               />
               {fieldState.invalid ? (
                 <FieldError errors={[fieldState.error]} />
@@ -200,6 +206,7 @@ export function SignupForm({
                 type='password'
                 placeholder='••••••••'
                 aria-invalid={fieldState.invalid}
+                autoComplete='new-password'
               />
               {fieldState.invalid ? (
                 <FieldError errors={[fieldState.error]} />
@@ -245,7 +252,7 @@ export function SignupForm({
           <Button
             variant='outline'
             type='button'
-            onClick={(event) => handleSignUpWithProvider(event, 'google')}
+            onClick={(event) => handleSignUpWithOAuth(event, 'google')}
             disabled={isPending}
           >
             {isPending ? (
@@ -263,7 +270,7 @@ export function SignupForm({
           <Button
             variant='outline'
             type='button'
-            onClick={(event) => handleSignUpWithProvider(event, 'github')}
+            onClick={(event) => handleSignUpWithOAuth(event, 'github')}
             disabled={isPending}
           >
             {isPending ? (

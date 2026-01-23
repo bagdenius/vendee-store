@@ -7,19 +7,19 @@ export const iframeHeight = '800px';
 
 export const description = 'A sidebar with a header and a search form.';
 
-export default async function StoreLayout({
+export default function StoreLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const profilePromise = getCurrentProfile();
+  const profileResultPromise = getCurrentProfile();
 
   return (
     <div className='[--header-height:calc(--spacing(14))]'>
-      <SidebarProvider className='flex flex-col' defaultOpen={false}>
+      <SidebarProvider className='flex flex-col' defaultOpen={true}>
         <StoreHeader />
         <div className='flex flex-1'>
-          <StoreSidebar profilePromise={profilePromise} />
+          <StoreSidebar profileResultPromise={profileResultPromise} />
           <SidebarInset>{children}</SidebarInset>
         </div>
       </SidebarProvider>

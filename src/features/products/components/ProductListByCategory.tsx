@@ -1,10 +1,7 @@
 'use client';
 
-import { PostgrestError } from '@supabase/supabase-js';
 import Link from 'next/link';
-import { use, useEffect, useState } from 'react';
-import { toast } from 'sonner';
-import ProductCard from './ProductCard';
+import { useEffect, useState } from 'react';
 
 import {
   Carousel,
@@ -14,25 +11,20 @@ import {
 } from '@/shared/components/ui/Carousel';
 import { Skeleton } from '@/shared/components/ui/Skeleton';
 import { Category, ProductList } from '@/shared/dal/entities';
+import ProductCard from './ProductCard';
 
 type ProductListByCategoryProps = {
   category: Category;
-  productListPromise: Promise<{
-    products: ProductList | null;
-    error: PostgrestError | null;
-  }>;
+  products: ProductList;
 };
 
 export default function ProductListByCategory({
   category,
-  productListPromise,
+  products,
 }: ProductListByCategoryProps) {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
-  const { products, error } = use(productListPromise);
-
-  if (error) toast.error('Failed to get products');
 
   const filtered = products?.filter((p) =>
     p.categories.some(
