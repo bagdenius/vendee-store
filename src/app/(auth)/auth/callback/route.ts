@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+
 import { createSupabaseServerClient } from '@/shared/lib/supabase/server';
 
 export async function GET(request: Request) {
@@ -9,7 +10,7 @@ export async function GET(request: Request) {
   const next =
     nextParam && nextParam.startsWith('/')
       ? nextParam
-      : `/?auth=success&provider=${provider}`;
+      : `/#auth=success&provider=${provider}`;
   if (!code) return NextResponse.redirect(new URL('/auth', url.origin));
   const supabase = await createSupabaseServerClient();
   const { error } = await supabase.auth.exchangeCodeForSession(code);

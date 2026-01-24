@@ -2,11 +2,10 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono, Inter } from 'next/font/google';
 
 import { ThemeProvider } from '@/features/theme/components/ThemeProvider';
+import DebugViewportSizeLabel from '@/shared/components/DebugViewportSizeLabel';
 import { Toaster } from '@/shared/components/ui/Sonner';
 
 import '@/shared/styles/globals.css';
-import DebugViewportSizeLabel from '@/shared/components/DebugViewportSizeLabel';
-import { createProfile } from '@/shared/dal/services/profile/createProfile';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 

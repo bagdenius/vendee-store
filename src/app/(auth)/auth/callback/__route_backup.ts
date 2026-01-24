@@ -6,7 +6,7 @@ export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get('code');
   const provider = searchParams.get('provider');
-  let next = searchParams.get('next') ?? `/?auth=success&provider=${provider}`;
+  let next = searchParams.get('next') ?? `/#auth=success&provider=${provider}`;
   if (!next.startsWith('/')) next = '/';
   if (code) {
     const supabase = await createSupabaseServerClient();

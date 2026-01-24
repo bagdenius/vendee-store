@@ -10,12 +10,10 @@ import {
   User,
 } from 'lucide-react';
 import Link from 'next/link';
-import { use } from 'react';
 import { toast } from 'sonner';
 
 import { signoutAction } from '@/features/auth/actions/signoutAction';
-import type { ProfileResult } from '@/shared/dal/entities';
-
+import { useCurrentProfile } from '@/shared/dal/hooks/profile/useCurrentProfile';
 import { Avatar, AvatarFallback, AvatarImage } from './Avatar';
 import { Button } from './Button';
 import {
@@ -34,14 +32,31 @@ import {
   useSidebar,
 } from './Sidebar';
 import { Skeleton } from './Skeleton';
+import { useEffect } from 'react';
 
-type NavUserProps = {
-  profilePromise: Promise<ProfileResult>;
-};
-
-export function NavUser({ profilePromise }: NavUserProps) {
+export function NavUser() {
   const { isMobile } = useSidebar();
-  const { data: profile, error } = use(profilePromise);
+  const { data: profile, error, isLoading, refetch } = useCurrentProfile();
+
+  useEffect(() => {
+    if (!profile) return;
+    const hash = window.location.hash;
+    const params = new URLSearchParams(hash.slice(1));
+    const auth = params.get('auth');
+    const provider = params.get('provider');
+    const action = params.get('action');
+
+    if (auth === 'success') {
+      toast.success(
+        `You successfully ${action === 'signin' ? 'signed in' : 'signed up'} ${provider ? ` with ${provider.at(0)?.toUpperCase() + provider.slice(1)}` : ''}`,
+        {
+          description: `${profile?.fullName?.split(' ').at(0)}, Welcome and Happy shopping!`,
+          action: { label: 'Got it!', onClick: () => {} },
+        },
+      );
+      history.replaceState(null, '', window.location.pathname);
+    }
+  }, [profile]);
 
   async function handleLogout() {
     const { error } = await signoutAction();
@@ -56,9 +71,11 @@ export function NavUser({ profilePromise }: NavUserProps) {
       description: "Hope you'll come back again :)",
       action: { label: 'Got it!', onClick: () => {} },
     });
+    refetch();
   }
 
-  if (error)
+  if (isLoading) return <NavUserSkeleton />;
+  if (error || !profile)
     return (
       <SidebarMenu className='min-h-12'>
         <SidebarMenuItem className='text-center'>
@@ -147,5 +164,14 @@ export function NavUser({ profilePromise }: NavUserProps) {
 }
 
 export function NavUserSkeleton() {
-  return <Skeleton className='h-12' />;
+  return (
+    <div className='flex h-12 items-center mx-2 gap-2'>
+      <Skeleton className='size-8 rounded-full' />
+      <div className='grow space-y-1'>
+        <Skeleton className='w-3/4 h-4' />
+        <Skeleton className='h-3' />
+      </div>
+      <Skeleton className='w-4 h-5 rounded-full' />
+    </div>
+  );
 }

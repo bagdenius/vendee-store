@@ -1,22 +1,32 @@
-import { Suspense } from 'react';
-
+import { Skeleton } from '@/shared/components/ui/Skeleton';
 import { getAllCategories } from '@/shared/dal/services/category/getAllCategories';
 import { getAllProducts } from '@/shared/dal/services/product/getAllProducts';
-import ProductListByCategory, {
-  ProductListByCategorySkeleton,
-} from './ProductListByCategory';
+import ProductListByCategory from './ProductListByCategory';
 
 export default async function CategorizedProductsSection() {
   const { data: categories, error: categoriesError } = await getAllCategories();
   const { data: products, error: productsError } = await getAllProducts();
 
+  if (categoriesError || productsError) return null;
+
+  return categories.map((category) => (
+    <ProductListByCategory
+      key={category.id}
+      category={category}
+      products={products}
+    />
+  ));
+}
+
+export function CategorizedProductsSectionSkeleton() {
   return (
-    !categoriesError &&
-    !productsError &&
-    categories.map((category) => (
-      <Suspense key={category.id} fallback={<ProductListByCategorySkeleton />}>
-        <ProductListByCategory category={category} products={products} />
-      </Suspense>
-    ))
+    <div className='flex flex-1 flex-col gap-3'>
+      <Skeleton className='w-25 h-8' />
+      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4'>
+        {Array.from({ length: 5 }).map((_, i) => (
+          <Skeleton key={i} className='w-full h-135 mb-2' />
+        ))}
+      </div>
+    </div>
   );
 }

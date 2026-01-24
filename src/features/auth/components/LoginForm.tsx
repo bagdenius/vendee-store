@@ -66,14 +66,7 @@ export function LoginForm({
         });
         return;
       }
-      router.push('/?auth=success');
-      const metaName: string =
-        user?.userMetadata.name || user?.userMetadata.fullName;
-      const name = metaName.trim().split(' ').at(0);
-      toast.success('You successfully signed in', {
-        description: `${name && `${name}, `}Welcome and Happy shopping!`,
-        action: { label: 'Got it!', onClick: () => {} },
-      });
+      router.push('/#auth=success&action=signin');
     });
   }
 

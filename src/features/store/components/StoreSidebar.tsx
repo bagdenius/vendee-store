@@ -1,165 +1,25 @@
-'use client';
-
-import {
-  BookOpen,
-  Bot,
-  Frame,
-  Info,
-  LifeBuoy,
-  Map,
-  PieChart,
-  Send,
-  Settings2,
-  SquareTerminal,
-} from 'lucide-react';
 import { Suspense } from 'react';
 
-import { NavMain } from '@/shared/components/ui/NavMain';
-import { NavProjects } from '@/shared/components/ui/NavProjects';
-import { NavSecondary } from '@/shared/components/ui/NavSecondary';
 import { NavUser, NavUserSkeleton } from '@/shared/components/ui/NavUser';
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
 } from '@/shared/components/ui/Sidebar';
-import type { ProfileResult } from '@/shared/dal/entities';
+import { getAllCategories } from '@/shared/dal/services/category/getAllCategories';
+import { NavCategories } from './NavCategories';
 
-const dataMock = {
-  navMain: [
-    {
-      title: 'Playground',
-      url: '#',
-      icon: SquareTerminal,
-      isActive: true,
-      items: [
-        {
-          title: 'History',
-          url: '#',
-        },
-        {
-          title: 'Starred',
-          url: '#',
-        },
-        {
-          title: 'Settings',
-          url: '#',
-        },
-      ],
-    },
-    {
-      title: 'Models',
-      url: '#',
-      icon: Bot,
-      items: [
-        {
-          title: 'Genesis',
-          url: '#',
-        },
-        {
-          title: 'Explorer',
-          url: '#',
-        },
-        {
-          title: 'Quantum',
-          url: '#',
-        },
-      ],
-    },
-    {
-      title: 'Documentation',
-      url: '#',
-      icon: BookOpen,
-      items: [
-        {
-          title: 'Introduction',
-          url: '#',
-        },
-        {
-          title: 'Get Started',
-          url: '#',
-        },
-        {
-          title: 'Tutorials',
-          url: '#',
-        },
-        {
-          title: 'Changelog',
-          url: '#',
-        },
-      ],
-    },
-    {
-      title: 'Settings',
-      url: '#',
-      icon: Settings2,
-      items: [
-        {
-          title: 'General',
-          url: '#',
-        },
-        {
-          title: 'Team',
-          url: '#',
-        },
-        {
-          title: 'Billing',
-          url: '#',
-        },
-        {
-          title: 'Limits',
-          url: '#',
-        },
-      ],
-    },
-  ],
-  navSecondary: [
-    {
-      title: 'Support',
-      url: '#',
-      icon: LifeBuoy,
-    },
-    {
-      title: 'Feedback',
-      url: '#',
-      icon: Send,
-    },
-    {
-      title: 'Payment and Delivery',
-      url: '#',
-      icon: Info,
-    },
-  ],
-  projects: [
-    {
-      name: 'Design Engineering',
-      url: '#',
-      icon: Frame,
-    },
-    {
-      name: 'Sales & Marketing',
-      url: '#',
-      icon: PieChart,
-    },
-    {
-      name: 'Travel',
-      url: '#',
-      icon: Map,
-    },
-  ],
-};
+export async function StoreSidebar(
+  props: React.ComponentProps<typeof Sidebar>,
+) {
+  const { data: categories, error } = await getAllCategories();
 
-type StoreSidebarProps = React.ComponentProps<typeof Sidebar> & {
-  profileResultPromise: Promise<ProfileResult>;
-};
+  if (error) return;
 
-export function StoreSidebar({
-  profileResultPromise: profilePromise,
-  ...props
-}: StoreSidebarProps) {
   return (
     <Sidebar
       className='top-(--header-height) h-[calc(100svh-var(--header-height))]!'
+      collapsible='icon'
       {...props}
     >
       {/* <SidebarHeader>
@@ -191,13 +51,14 @@ export function StoreSidebar({
         </SidebarMenu>
       </SidebarHeader> */}
       <SidebarContent>
-        <NavMain items={dataMock.navMain} />
-        <NavProjects projects={dataMock.projects} />
-        <NavSecondary items={dataMock.navSecondary} className='mt-auto' />
+        {/* <NavMain items={dataMock.navMain} /> */}
+        {/* <NavProjects projects={dataMock.projects} /> */}
+        {/* <NavSecondary items={dataMock.navSecondary} className='mt-auto' /> */}
+        <NavCategories categories={categories} />
       </SidebarContent>
       <SidebarFooter>
         <Suspense fallback={<NavUserSkeleton />}>
-          <NavUser profilePromise={profilePromise} />
+          <NavUser />
         </Suspense>
       </SidebarFooter>
     </Sidebar>

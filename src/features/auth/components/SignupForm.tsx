@@ -69,11 +69,7 @@ export function SignupForm({
           });
         });
       }
-      router.push('/');
-      toast.success('You successfully signed up', {
-        description: `${data.fullName.split(' ').at(0)}, Welcome and Happy shopping!`,
-        action: { label: 'Got it!', onClick: () => {} },
-      });
+      router.push('/#auth=success&action=signup');
     });
   }
 

@@ -9,7 +9,6 @@ import {
   CarouselContent,
   CarouselItem,
 } from '@/shared/components/ui/Carousel';
-import { Skeleton } from '@/shared/components/ui/Skeleton';
 import { Category, ProductList } from '@/shared/dal/entities';
 import ProductCard from './ProductCard';
 
@@ -92,19 +91,6 @@ export default function ProductListByCategory({
             className={`w-20 h-2 rounded-xs origin-center transition-all ease-in-out duration-500 ${i + 1 === current ? 'bg-primary scale-y-115' : 'bg-muted scale-y-100'}`}
             onClick={() => handleScrollToButtonClick(i)}
           />
-        ))}
-      </div>
-    </div>
-  );
-}
-
-export function ProductListByCategorySkeleton() {
-  return (
-    <div className='flex flex-1 flex-col gap-3'>
-      <Skeleton className='w-25 h-8' />
-      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4'>
-        {Array.from({ length: 5 }).map((_, i) => (
-          <Skeleton key={i} className='w-full h-140 mb-2' />
         ))}
       </div>
     </div>

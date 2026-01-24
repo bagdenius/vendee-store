@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev-inspect": "next dev --inspect",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "analyze": "next experimental-analyze",
     "update-types": "npx supabase gen types --lang=typescript --project-id \"llwedkywjjlauduymnhr\" > ./src/shared/dal/database.types.ts"
   },
   "dependencies": {

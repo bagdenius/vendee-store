@@ -4,21 +4,16 @@ import Link from 'next/link';
 import { LoginForm } from '@/features/auth/components/LoginForm';
 import { SignupForm } from '@/features/auth/components/SignupForm';
 import { ThemeToggle } from '@/features/theme/components/ThemeToggle';
+import RandomImageFadeCarousel from '@/shared/components/ui/RandomImageFadeCarousel';
+import { ScrollArea, ScrollBar } from '@/shared/components/ui/ScrollArea';
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from '@/shared/components/ui/Tabs';
-import RandomImageFadeCarousel from '@/shared/components/ui/RandomImageFadeCarousel';
-import { ScrollArea, ScrollBar } from '@/shared/components/ui/ScrollArea';
-import { getUser } from '@/shared/dal/services/auth/getUser';
-import { redirect } from 'next/navigation';
 
 export default function AuthPage() {
-  // const { data: user, error } = await getUser();
-  // if (error) console.log(error);
-  // if (user) redirect('/');
   return (
     <div className='grid lg:grid-cols-2 h-svh'>
       <main className='relative'>
