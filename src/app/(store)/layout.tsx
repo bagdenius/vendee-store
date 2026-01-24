@@ -3,10 +3,6 @@ import { StoreSidebar } from '@/features/store/components/StoreSidebar';
 import { SidebarInset, SidebarProvider } from '@/shared/components/ui/Sidebar';
 import { getCurrentProfile } from '@/shared/dal/services/profile/getCurrentProfile';
 
-export const iframeHeight = '800px';
-
-export const description = 'A sidebar with a header and a search form.';
-
 export default function StoreLayout({
   children,
 }: Readonly<{

@@ -12,8 +12,13 @@ import {
 } from '@/shared/components/ui/Tabs';
 import RandomImageFadeCarousel from '@/shared/components/ui/RandomImageFadeCarousel';
 import { ScrollArea, ScrollBar } from '@/shared/components/ui/ScrollArea';
+import { getUser } from '@/shared/dal/services/auth/getUser';
+import { redirect } from 'next/navigation';
 
-export default async function AuthPage() {
+export default function AuthPage() {
+  // const { data: user, error } = await getUser();
+  // if (error) console.log(error);
+  // if (user) redirect('/');
   return (
     <div className='grid lg:grid-cols-2 h-svh'>
       <main className='relative'>

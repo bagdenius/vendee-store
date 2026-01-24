@@ -3,6 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Provider } from '@supabase/supabase-js';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, useTransition } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
@@ -21,13 +22,12 @@ import { cn } from '@/shared/lib/utils/tailwindMerge';
 import { loginAction } from '../actions/loginAction';
 import { loginWithOAuthAction } from '../actions/loginWithOAuthAction';
 import { loginSchema, type LoginSchema } from '../schemas/signInSchema';
-import { getProfileById } from '@/shared/dal/services/profile/getProfileById';
-import { useProfile } from '@/shared/dal/hooks/profile/useProfile';
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<'form'>) {
+  const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const { control, handleSubmit, setError } = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
@@ -66,7 +66,7 @@ export function LoginForm({
         });
         return;
       }
-      // router.push('/?auth=success');
+      router.push('/?auth=success');
       const metaName: string =
         user?.userMetadata.name || user?.userMetadata.fullName;
       const name = metaName.trim().split(' ').at(0);

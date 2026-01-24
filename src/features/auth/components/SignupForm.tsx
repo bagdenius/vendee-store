@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Provider } from '@supabase/supabase-js';
+import { useRouter } from 'next/navigation';
 import { MouseEvent, useEffect, useTransition } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
@@ -26,6 +27,7 @@ export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<'form'>) {
+  const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const { control, handleSubmit, setError } = useForm<SignupSchema>({
     resolver: zodResolver(signupSchema),
@@ -51,7 +53,7 @@ export function SignupForm({
 
   async function handleSignup(data: SignupSchema) {
     startTransition(async () => {
-      const { user, validationErrors, signupError } = await signupAction(data);
+      const { validationErrors, signupError } = await signupAction(data);
       if (signupError) {
         toast.warning(signupError.message, {
           description: 'Try another credentials or use provider',
@@ -67,12 +69,9 @@ export function SignupForm({
           });
         });
       }
-      // router.push('/');
-      const metaName: string =
-        user?.userMetadata.name || user?.userMetadata.fullName;
-      const name = metaName.trim().split(' ').at(0);
+      router.push('/');
       toast.success('You successfully signed up', {
-        description: `${name && `${name}, `}Welcome and Happy shopping!`,
+        description: `${data.fullName.split(' ').at(0)}, Welcome and Happy shopping!`,
         action: { label: 'Got it!', onClick: () => {} },
       });
     });
