@@ -27,7 +27,7 @@ export function NavCategories({ categories }: NavCategoriesProps) {
 
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Categories</SidebarGroupLabel>
+      <SidebarGroupLabel>Shop by category</SidebarGroupLabel>
       <SidebarMenu>
         {categories.map((category) => (
           <SidebarMenuItem key={category.id}>

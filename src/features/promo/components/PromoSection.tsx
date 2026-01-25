@@ -15,7 +15,7 @@ import PromoCard from './PromoCard';
 const mockPromos = [
   {
     id: '6e60c137-5010-465f-a484-37e41de274e7',
-    text: 'The GOAT device and some long text that i write here to test text wrapping on that component',
+    text: 'The GOAT device and some long text that i write here to test text wrapping on this component',
   },
   {
     id: '12fc2e41-ecf6-432a-be58-8e36a795dd8d',

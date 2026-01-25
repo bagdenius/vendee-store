@@ -57,9 +57,9 @@ export async function StoreSidebar(
         <NavCategories categories={categories} />
       </SidebarContent>
       <SidebarFooter>
-        <Suspense fallback={<NavUserSkeleton />}>
-          <NavUser />
-        </Suspense>
+        {/* <Suspense fallback={<NavUserSkeleton />}> */}
+        <NavUser />
+        {/* </Suspense> */}
       </SidebarFooter>
     </Sidebar>
   );

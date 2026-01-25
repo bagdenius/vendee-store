@@ -37,7 +37,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           {product.images.slice(0, 3).map((image) => (
             <CarouselItem key={image.id}>
               <Link
-                href={`store/product/${product.slug}`}
+                href={`/product/${product.slug}`}
                 className='block relative aspect-square'
               >
                 <Image
@@ -59,12 +59,10 @@ export default function ProductCard({ product }: ProductCardProps) {
         <CarouselPrevious
           className='left-1 lg:-left-10 lg:group-hover/product-card:left-1'
           variant='secondary'
-          size='icon-lg'
         />
         <CarouselNext
           className='right-1 lg:-right-10 group-hover/product-card:right-1'
           variant='secondary'
-          size='icon-lg'
         />
       </Carousel>
       <CardHeader>

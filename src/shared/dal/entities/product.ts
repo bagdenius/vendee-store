@@ -17,4 +17,5 @@ export type Product = BaseProduct & {
 
 export type ProductList = Product[];
 
+export type ProductResult = Result<Product, PostgrestError>;
 export type ProductListResult = Result<ProductList, PostgrestError>;
