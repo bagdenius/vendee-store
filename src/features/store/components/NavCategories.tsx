@@ -14,16 +14,18 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  useSidebar,
 } from '@/shared/components/ui/Sidebar';
-import { CategoryList } from '@/shared/dal/entities';
+import { CategoryListResult } from '@/shared/dal/entities';
+import { use } from 'react';
 
 type NavCategoriesProps = {
-  categories: CategoryList;
+  categoriesPromise: Promise<CategoryListResult>;
 };
 
-export function NavCategories({ categories }: NavCategoriesProps) {
-  const { isMobile } = useSidebar();
+export function NavCategories({ categoriesPromise }: NavCategoriesProps) {
+  const { data: categories, error } = use(categoriesPromise);
+
+  if (error) return;
 
   return (
     <SidebarGroup>

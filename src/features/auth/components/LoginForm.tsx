@@ -49,8 +49,7 @@ export function LoginForm({
   async function handleLoginWithPassword(data: LoginSchema) {
     startTransition(async () => {
       // todo: use weak password in toast or something to inform user about weakness reason
-      const { user, weakPassword, validationErrors, loginError } =
-        await loginAction(data);
+      const { user, validationErrors, loginError } = await loginAction(data);
       if (validationErrors) {
         return Object.entries(validationErrors).forEach(([field, message]) => {
           setError(field as keyof LoginSchema, {

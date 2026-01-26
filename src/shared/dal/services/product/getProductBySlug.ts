@@ -2,11 +2,11 @@ import 'server-only';
 
 import { objectToCamel } from 'ts-case-convert';
 
-import { createSupabaseServerClient } from '@/shared/lib/supabase/server';
 import { ProductResult } from '../../entities';
+import { createSupabaseClient } from '@/shared/lib/supabase/client';
 
 export async function getProductBySlug(slug: string): Promise<ProductResult> {
-  const supabase = await createSupabaseServerClient();
+  const supabase = createSupabaseClient();
   const { data, error } = await supabase
     .from('products')
     .select(

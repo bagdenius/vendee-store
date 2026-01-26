@@ -2,11 +2,11 @@ import { AuthError, PostgrestError } from '@supabase/supabase-js';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { objectToCamel } from 'ts-case-convert';
 
-import { createSupabaseBrowserClient } from '@/shared/lib/supabase/client';
+import { createSupabaseClient } from '@/shared/lib/supabase/client';
 import { Profile } from '../../entities';
 
 export function useCurrentProfile() {
-  const supabase = useMemo(() => createSupabaseBrowserClient(), []);
+  const supabase = useMemo(() => createSupabaseClient(), []);
   const [data, setData] = useState<Profile | undefined>(undefined);
   const [error, setError] = useState<PostgrestError | AuthError | undefined>(
     undefined,

@@ -1,6 +1,7 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
+  reactCompiler: true,
   images: {
     dangerouslyAllowLocalIP: true,
     remotePatterns: [
@@ -11,7 +12,7 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       },
       new URL(
-        'https://llwedkywjjlauduymnhr.supabase.co/storage/v1/object/public/product-images/**'
+        'https://llwedkywjjlauduymnhr.supabase.co/storage/v1/object/public/product-images/**',
       ),
     ],
   },

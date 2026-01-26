@@ -9,13 +9,17 @@ export default async function CategorizedProductsSection() {
 
   if (categoriesError || productsError) return null;
 
-  return categories.map((category) => (
-    <ProductListByCategory
-      key={category.id}
-      category={category}
-      products={products}
-    />
-  ));
+  return (
+    <section id='categorized-products-section'>
+      {categories.map((category) => (
+        <ProductListByCategory
+          key={category.id}
+          category={category}
+          products={products}
+        />
+      ))}
+    </section>
+  );
 }
 
 export function CategorizedProductsSectionSkeleton() {

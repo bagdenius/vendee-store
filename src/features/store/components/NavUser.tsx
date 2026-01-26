@@ -10,12 +10,17 @@ import {
   User,
 } from 'lucide-react';
 import Link from 'next/link';
+import { useEffect } from 'react';
 import { toast } from 'sonner';
 
 import { signoutAction } from '@/features/auth/actions/signoutAction';
 import { useCurrentProfile } from '@/shared/dal/hooks/profile/useCurrentProfile';
-import { Avatar, AvatarFallback, AvatarImage } from './Avatar';
-import { Button } from './Button';
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from '../../../shared/components/ui/Avatar';
+import { Button } from '../../../shared/components/ui/Button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,19 +29,18 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from './DropdownMenu';
+} from '../../../shared/components/ui/DropdownMenu';
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from './Sidebar';
-import { Skeleton } from './Skeleton';
-import { useEffect } from 'react';
+} from '../../../shared/components/ui/Sidebar';
+import { Skeleton } from '../../../shared/components/ui/Skeleton';
 
 export function NavUser() {
   const { isMobile } = useSidebar();
-  const { data: profile, error, isLoading, refetch } = useCurrentProfile();
+  const { data: profile, isLoading, error, refetch } = useCurrentProfile();
 
   useEffect(() => {
     if (!profile) return;
@@ -48,7 +52,7 @@ export function NavUser() {
 
     if (auth === 'success') {
       toast.success(
-        `You successfully ${action === 'signin' ? 'signed in' : 'signed up'} ${provider ? ` with ${provider.at(0)?.toUpperCase() + provider.slice(1)}` : ''}`,
+        `You successfully ${action === 'signup' ? 'signed up' : 'signed in'} ${provider ? ` with ${provider.at(0)?.toUpperCase() + provider.slice(1)}` : ''}`,
         {
           description: `${profile?.fullName?.split(' ').at(0)}, Welcome and Happy shopping!`,
           action: { label: 'Got it!', onClick: () => {} },
@@ -67,14 +71,15 @@ export function NavUser() {
       });
       return;
     }
+    refetch();
     toast.success('You successfully logged out', {
       description: "Hope you'll come back again :)",
       action: { label: 'Got it!', onClick: () => {} },
     });
-    refetch();
   }
 
   if (isLoading) return <NavUserSkeleton />;
+
   if (error || !profile)
     return (
       <SidebarMenu className='min-h-12'>

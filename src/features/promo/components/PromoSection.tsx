@@ -76,7 +76,7 @@ export default function PromoSection() {
   }
 
   return (
-    <div>
+    <section id='promo-section'>
       <Carousel
         setApi={setApi}
         opts={{ slidesToScroll: 'auto', loop: true }}
@@ -104,6 +104,6 @@ export default function PromoSection() {
           />
         ))}
       </div>
-    </div>
+    </section>
   );
 }

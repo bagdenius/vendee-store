@@ -3,10 +3,10 @@ import 'server-only';
 import { objectToCamel } from 'ts-case-convert';
 
 import type { ProductListResult } from '@/shared/dal/entities';
-import { createSupabaseServerClient } from '@/shared/lib/supabase/server';
+import { createSupabaseClient } from '@/shared/lib/supabase/client';
 
 export async function getAllProducts(): Promise<ProductListResult> {
-  const supabase = await createSupabaseServerClient();
+  const supabase = createSupabaseClient();
   const { data, error } = await supabase
     .from('products')
     .select(
