@@ -6,6 +6,7 @@ import DebugViewportSizeLabel from '@/shared/components/DebugViewportSizeLabel';
 import { Toaster } from '@/shared/components/ui/Sonner';
 
 import '@/shared/styles/globals.css';
+import { Suspense } from 'react';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 

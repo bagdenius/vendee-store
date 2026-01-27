@@ -3,20 +3,43 @@
 import { useEffect, useState } from 'react';
 
 export default function DebugViewportSizeLabel() {
-  const [width, setWidth] = useState(0);
-  const [height, setHeight] = useState(0);
+  const [size, setSize] = useState({ width: 0, height: 0 });
 
   useEffect(() => {
-    function handleResize() {
-      setWidth(window.innerWidth);
-      setHeight(window.innerHeight);
+    function updateSize() {
+      const vw = window.visualViewport;
+      if (vw) {
+        setSize({
+          width: Math.round(vw.width),
+          height: Math.round(vw.height),
+        });
+      } else {
+        setSize({
+          width: window.innerWidth,
+          height: window.innerHeight,
+        });
+      }
     }
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+
+    // Викликаємо після layout через requestAnimationFrame
+    const id = requestAnimationFrame(updateSize);
+
+    // Слухаємо всі можливі зміни viewport’а
+    window.addEventListener('resize', updateSize);
+    window.visualViewport?.addEventListener('resize', updateSize);
+    window.visualViewport?.addEventListener('scroll', updateSize);
+
+    return () => {
+      cancelAnimationFrame(id);
+      window.removeEventListener('resize', updateSize);
+      window.visualViewport?.removeEventListener('resize', updateSize);
+      window.visualViewport?.removeEventListener('scroll', updateSize);
+    };
   }, []);
 
   return (
-    <div className='fixed top-0 right-0 bg-primary text-primary-foreground z-10000'>{`${width}x${height}`}</div>
+    <div className='fixed top-0 right-0 z-1000000 bg-primary text-primary-foreground px-2 py-1 rounded-bl-md shadow'>
+      {size.width}×{size.height}
+    </div>
   );
 }
