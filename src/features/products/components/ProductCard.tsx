@@ -27,9 +27,6 @@ type ProductCardProps = {
 };
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const testRating = getRandomNumber(3, 5);
-  const testRatingCount = getRandomNumber(50, 500);
-
   return (
     <Card className='group/product-card h-full pt-0 gap-4 hover:ring-2 hover:ring-accent transition-shadow duration-300'>
       <Carousel opts={{ loop: true }}>
@@ -45,12 +42,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                   src={image.url}
                   alt={`${product.title} image ${image.sortOrder}`}
                   className='object-contain'
-                  sizes='90vw,
-                        (min-width: 40rem) 44vw,
-                        (min-width: 48rem) 45vw,
-                        (min-width: 64rem) 23vw,
-                        (min-width: 80rem) 18vw,
-                        (min-width: 96rem) 19vw'
+                  sizes='90vw, (min-width: 40rem) 44vw, (min-width: 48rem) 45vw, (min-width: 64rem) 23vw, (min-width: 80rem) 18vw, (min-width: 96rem) 19vw'
                 />
               </Link>
             </CarouselItem>
@@ -75,13 +67,13 @@ export default function ProductCard({ product }: ProductCardProps) {
           </Link>
         </CardTitle>
         <CardDescription>
-          <Rating value={testRating} readOnly>
+          <Rating value={getRandomNumber(3, 5)} readOnly>
             {Array.from({ length: 5 }).map((_, index) => (
               <RatingButton key={index} size={13} />
             ))}
             <span>(</span>
             <Link href='#' className='hover:underline underline-offset-2'>
-              {testRatingCount}
+              {getRandomNumber(10, 500)}
             </Link>
             <span>)</span>
           </Rating>

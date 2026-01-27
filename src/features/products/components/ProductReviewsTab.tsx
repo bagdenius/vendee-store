@@ -6,7 +6,9 @@ type ProductReviewsTabProps = {
   product: Product;
 };
 
-export default function ProductReviewsTab({ product }: ProductReviewsTabProps) {
+export default async function ProductReviewsTab({
+  product,
+}: ProductReviewsTabProps) {
   return (
     <TabsContent value='reviews'>
       <Card>

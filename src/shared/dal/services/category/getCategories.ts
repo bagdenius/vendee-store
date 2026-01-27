@@ -3,10 +3,15 @@ import 'server-only';
 import { objectToCamel } from 'ts-case-convert';
 
 import type { CategoryListResult } from '@/shared/dal/entities';
-import { createSupabaseClient } from '@/shared/lib/supabase/client';
+import { createSupabasePublicClient } from '@/shared/lib/supabase/public';
+import { cacheLife, cacheTag } from 'next/cache';
 
-export async function getAllCategories(): Promise<CategoryListResult> {
-  const supabase = createSupabaseClient();
+export async function getCategories(): Promise<CategoryListResult> {
+  'use cache';
+  cacheLife('days');
+  cacheTag('categories');
+
+  const supabase = createSupabasePublicClient();
   const { data, error } = await supabase
     .from('categories')
     .select('id, name, slug, sort_order, created_at')

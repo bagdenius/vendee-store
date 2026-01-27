@@ -2,17 +2,16 @@ import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
-  SidebarGroup,
   SidebarHeader,
 } from '@/shared/components/ui/Sidebar';
-import { getAllCategories } from '@/shared/dal/services/category/getAllCategories';
+import { getCategories } from '@/shared/dal/services/category/getCategories';
 import { NavCategories } from './NavCategories';
 import { NavUser } from './NavUser';
 
 export function StoreSidebar({
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
-  const categoriesPromise = getAllCategories();
+  const categoriesPromise = getCategories();
 
   return (
     <Sidebar

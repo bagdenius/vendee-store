@@ -17,6 +17,6 @@ export default function DebugViewportSizeLabel() {
   }, []);
 
   return (
-    <div className='fixed top-0 right-0 bg-black text-white z-10000'>{`${width}x${height}`}</div>
+    <div className='fixed top-0 right-0 bg-primary text-primary-foreground z-10000'>{`${width}x${height}`}</div>
   );
 }

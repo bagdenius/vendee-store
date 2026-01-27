@@ -3,10 +3,15 @@ import 'server-only';
 import { objectToCamel } from 'ts-case-convert';
 
 import type { ProductListResult } from '@/shared/dal/entities';
-import { createSupabaseClient } from '@/shared/lib/supabase/client';
+import { createSupabasePublicClient } from '@/shared/lib/supabase/public';
+import { cacheLife, cacheTag } from 'next/cache';
 
-export async function getAllProducts(): Promise<ProductListResult> {
-  const supabase = createSupabaseClient();
+export async function getProducts(): Promise<ProductListResult> {
+  'use cache';
+  cacheLife('days');
+  cacheTag('products');
+
+  const supabase = createSupabasePublicClient();
   const { data, error } = await supabase
     .from('products')
     .select(

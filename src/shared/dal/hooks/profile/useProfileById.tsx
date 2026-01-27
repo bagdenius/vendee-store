@@ -2,7 +2,7 @@ import { PostgrestError } from '@supabase/supabase-js';
 import { useEffect, useMemo, useState } from 'react';
 import { objectToCamel } from 'ts-case-convert';
 
-import { createSupabaseClient } from '@/shared/lib/supabase/client';
+import { createSupabaseBrowserClient } from '@/shared/lib/supabase/browser';
 import { Profile } from '../../entities';
 
 type useProfileProps = {
@@ -10,7 +10,7 @@ type useProfileProps = {
 };
 
 export function useProfileById({ id }: useProfileProps) {
-  const supabase = useMemo(() => createSupabaseClient(), []);
+  const supabase = useMemo(() => createSupabaseBrowserClient(), []);
   const [data, setData] = useState<Profile | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<PostgrestError | null>(null);

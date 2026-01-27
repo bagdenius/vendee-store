@@ -12,16 +12,23 @@ import {
   CardTitle,
 } from '@/shared/components/ui/Card';
 import { Rating, RatingButton } from '@/shared/components/ui/Rating';
+import { Skeleton } from '@/shared/components/ui/Skeleton';
 import { TabsContent } from '@/shared/components/ui/Tabs';
 import { Product } from '@/shared/dal/entities';
 import { getRandomNumber } from '@/shared/lib/utils/getRandomNumber';
+import { connection } from 'next/server';
+import { Suspense } from 'react';
 import ProductImagesCarousel from './ProductImagesCarousel';
+import { wait } from '@/shared/lib/utils/wait';
+import { ProductRating, ProductRatingSkeleton } from './ProductRating';
 
 type AboutProductTabProps = {
   product: Product;
 };
 
-export default function AboutProductTab({ product }: AboutProductTabProps) {
+export default async function AboutProductTab({
+  product,
+}: AboutProductTabProps) {
   return (
     <TabsContent value='about' className='grid lg:grid-cols-[3fr_4fr] gap-4'>
       <ProductImagesCarousel product={product} />
@@ -38,16 +45,9 @@ export default function AboutProductTab({ product }: AboutProductTabProps) {
                 </Badge>
               ))}
             </CardAction>
-            <Rating value={getRandomNumber(3, 5)} readOnly>
-              {Array.from({ length: 5 }).map((_, index) => (
-                <RatingButton key={index} size={13} />
-              ))}
-              <span>(</span>
-              <Link href='#' className='hover:underline underline-offset-2'>
-                {getRandomNumber(50, 500)}
-              </Link>
-              <span>)</span>
-            </Rating>
+            <Suspense fallback={<ProductRatingSkeleton />}>
+              <ProductRating />
+            </Suspense>
           </CardHeader>
           <CardFooter className='@container/card-footer flex-col gap-2 items-start'>
             <span className='text-2xl font-medium'>

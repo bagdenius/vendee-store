@@ -18,6 +18,7 @@ import { Button } from '@/shared/components/ui/Button';
 import { SearchForm } from '@/shared/components/ui/SearchForm';
 import { Separator } from '@/shared/components/ui/Separator';
 import { useSidebar } from '@/shared/components/ui/Sidebar';
+import { ThemeProvider } from '@/features/theme/components/ThemeProvider';
 
 export function StoreHeader() {
   const { toggleSidebar } = useSidebar();

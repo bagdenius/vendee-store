@@ -17,7 +17,7 @@ type ProductListByCategoryProps = {
   products: ProductList;
 };
 
-export default function ProductListByCategory({
+export default function ProductCarousel({
   category,
   products,
 }: ProductListByCategoryProps) {

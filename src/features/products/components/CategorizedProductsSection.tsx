@@ -1,18 +1,18 @@
 import { Skeleton } from '@/shared/components/ui/Skeleton';
-import { getAllCategories } from '@/shared/dal/services/category/getAllCategories';
-import { getAllProducts } from '@/shared/dal/services/product/getAllProducts';
-import ProductListByCategory from './ProductListByCategory';
+import { getCategories } from '@/shared/dal/services/category/getCategories';
+import { getProducts } from '@/shared/dal/services/product/getProducts';
+import ProductCarousel from './ProductCarousel';
 
 export default async function CategorizedProductsSection() {
-  const { data: categories, error: categoriesError } = await getAllCategories();
-  const { data: products, error: productsError } = await getAllProducts();
+  const { data: categories, error: categoriesError } = await getCategories();
+  const { data: products, error: productsError } = await getProducts();
 
   if (categoriesError || productsError) return null;
 
   return (
     <section id='categorized-products-section'>
       {categories.map((category) => (
-        <ProductListByCategory
+        <ProductCarousel
           key={category.id}
           category={category}
           products={products}

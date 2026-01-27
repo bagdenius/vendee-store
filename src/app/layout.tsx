@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   icons: '',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -35,8 +35,8 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <DebugViewportSizeLabel />
         <ThemeProvider attribute='class' defaultTheme='dark' enableSystem>
+          <DebugViewportSizeLabel />
           <Toaster position='top-center' />
           {children}
         </ThemeProvider>

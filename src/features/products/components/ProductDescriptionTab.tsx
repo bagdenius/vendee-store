@@ -6,7 +6,7 @@ type ProductDescriptionTabProps = {
   product: Product;
 };
 
-export default function ProductDescriptionTab({
+export default async function ProductDescriptionTab({
   product,
 }: ProductDescriptionTabProps) {
   return (
