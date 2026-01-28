@@ -25,6 +25,13 @@ export async function signupAction(formData: SignupSchema) {
     },
   };
   const { data, error: signupError } = await signup(credentials);
-  if (signupError) return { signupError };
+  if (signupError) {
+    console.log(signupError);
+    const message =
+      signupError.code === 'user_already_exists'
+        ? 'User already registered'
+        : 'An error occured while signing up';
+    return { signupError: { message } };
+  }
   return { user: data.user, session: data.session };
 }

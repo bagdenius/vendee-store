@@ -16,7 +16,13 @@ export async function loginAction(formData: LoginSchema) {
   }
   const credentials = validationResult.data;
   const { data, error: loginError } = await login(credentials);
-  if (loginError) return { loginError };
+  if (loginError) {
+    const message =
+      loginError.code === 'invalid_credentials'
+        ? 'Invalid email or password'
+        : 'An error occured while signing in';
+    return { loginError: { message } };
+  }
   return {
     user: data.user,
     session: data.session,

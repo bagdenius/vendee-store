@@ -3,10 +3,10 @@ import 'server-only';
 import { objectToCamel } from 'ts-case-convert';
 
 import type { ProfileResult } from '@/shared/dal/entities';
-import { createSupabasePublicClient } from '@/shared/lib/supabase/public';
+import { createSupabaseServerClient } from '@/shared/lib/supabase/server';
 
 export async function getProfileById(id: string): Promise<ProfileResult> {
-  const supabase = createSupabasePublicClient();
+  const supabase = await createSupabaseServerClient();
   const { data, error } = await supabase
     .from('profiles')
     .select('*')

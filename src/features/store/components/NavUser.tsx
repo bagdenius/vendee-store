@@ -7,20 +7,17 @@ import {
   CreditCard,
   LogOut,
   Sparkles,
-  User,
 } from 'lucide-react';
-import Link from 'next/link';
 import { useEffect } from 'react';
 import { toast } from 'sonner';
 
 import { signoutAction } from '@/features/auth/actions/signoutAction';
-import { useCurrentProfile } from '@/shared/dal/hooks/profile/useCurrentProfile';
+import { Profile } from '@/shared/dal/entities';
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
 } from '../../../shared/components/ui/Avatar';
-import { Button } from '../../../shared/components/ui/Button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -38,9 +35,12 @@ import {
 } from '../../../shared/components/ui/Sidebar';
 import { Skeleton } from '../../../shared/components/ui/Skeleton';
 
-export function NavUser() {
+type NavUserProps = {
+  profile: Profile;
+};
+
+export function NavUser({ profile }: NavUserProps) {
   const { isMobile } = useSidebar();
-  const { data: profile, isLoading, setProfile, error } = useCurrentProfile();
 
   useEffect(() => {
     if (!profile) return;
@@ -63,7 +63,6 @@ export function NavUser() {
   }, [profile]);
 
   async function handleLogout() {
-    setProfile(undefined);
     const { error } = await signoutAction();
     if (error) {
       toast.warning(error.message, {
@@ -77,22 +76,6 @@ export function NavUser() {
       action: { label: 'Got it!', onClick: () => {} },
     });
   }
-
-  if (isLoading) return <NavUserSkeleton />;
-
-  if (error || !profile)
-    return (
-      <SidebarMenu className='min-h-12'>
-        <SidebarMenuItem className='text-center'>
-          <Button variant='link' asChild>
-            <Link href='/auth'>
-              <User />
-              <span>Log in to your account</span>
-            </Link>
-          </Button>
-        </SidebarMenuItem>
-      </SidebarMenu>
-    );
 
   return (
     <SidebarMenu>

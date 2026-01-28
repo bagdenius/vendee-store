@@ -5,13 +5,15 @@ import {
   SidebarHeader,
 } from '@/shared/components/ui/Sidebar';
 import { getCategories } from '@/shared/dal/services/category/getCategories';
+import { Suspense } from 'react';
+import NavAuth from './NavAuth';
 import { NavCategories } from './NavCategories';
-import { NavUser } from './NavUser';
+import { NavUserSkeleton } from './NavUser';
 
-export function StoreSidebar({
+export async function StoreSidebar({
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
-  const categoriesPromise = getCategories();
+  const { data: categories, error } = await getCategories();
 
   return (
     <Sidebar
@@ -20,10 +22,12 @@ export function StoreSidebar({
     >
       <SidebarHeader></SidebarHeader>
       <SidebarContent>
-        <NavCategories categoriesPromise={categoriesPromise} />
+        {!error && <NavCategories categories={categories} />}
       </SidebarContent>
       <SidebarFooter>
-        <NavUser />
+        <Suspense fallback={<NavUserSkeleton />}>
+          <NavAuth />
+        </Suspense>
       </SidebarFooter>
     </Sidebar>
   );

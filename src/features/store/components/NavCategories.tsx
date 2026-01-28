@@ -15,18 +15,13 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/shared/components/ui/Sidebar';
-import { CategoryListResult } from '@/shared/dal/entities';
-import { use } from 'react';
+import { CategoryList } from '@/shared/dal/entities';
 
 type NavCategoriesProps = {
-  categoriesPromise: Promise<CategoryListResult>;
+  categories: CategoryList;
 };
 
-export function NavCategories({ categoriesPromise }: NavCategoriesProps) {
-  const { data: categories, error } = use(categoriesPromise);
-
-  if (error) return;
-
+export function NavCategories({ categories }: NavCategoriesProps) {
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Shop by category</SidebarGroupLabel>
