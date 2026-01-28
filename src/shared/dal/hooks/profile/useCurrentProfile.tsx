@@ -7,7 +7,7 @@ import { Profile } from '../../entities';
 
 export function useCurrentProfile() {
   const supabase = useMemo(() => createSupabaseBrowserClient(), []);
-  const [data, setData] = useState<Profile | undefined>(undefined);
+  const [profile, setProfile] = useState<Profile | undefined>(undefined);
   const [error, setError] = useState<PostgrestError | AuthError | undefined>(
     undefined,
   );
@@ -16,7 +16,7 @@ export function useCurrentProfile() {
   const getCurrentProfile = useCallback(async () => {
     setIsLoading(true);
     setError(undefined);
-    setData(undefined);
+    setProfile(undefined);
     try {
       const { data: userData, error: userError } =
         await supabase.auth.getUser();
@@ -27,7 +27,7 @@ export function useCurrentProfile() {
         .eq('id', userData.user.id)
         .single();
       if (profileError) return setError(profileError);
-      setData(objectToCamel(profile));
+      setProfile(objectToCamel(profile));
     } finally {
       setIsLoading(false);
     }
@@ -37,5 +37,11 @@ export function useCurrentProfile() {
     getCurrentProfile();
   }, [getCurrentProfile]);
 
-  return { data, error, isLoading, refetch: getCurrentProfile };
+  return {
+    data: profile,
+    error,
+    isLoading,
+    setProfile,
+    refetch: getCurrentProfile,
+  };
 }

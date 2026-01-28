@@ -40,7 +40,7 @@ import { Skeleton } from '../../../shared/components/ui/Skeleton';
 
 export function NavUser() {
   const { isMobile } = useSidebar();
-  const { data: profile, isLoading, error, refetch } = useCurrentProfile();
+  const { data: profile, isLoading, setProfile, error } = useCurrentProfile();
 
   useEffect(() => {
     if (!profile) return;
@@ -63,15 +63,15 @@ export function NavUser() {
   }, [profile]);
 
   async function handleLogout() {
+    setProfile(undefined);
     const { error } = await signoutAction();
     if (error) {
       toast.warning(error.message, {
-        description: 'Try again :)',
+        description: 'Try to refresh the page :)',
         action: { label: 'Got it!', onClick: () => {} },
       });
       return;
     }
-    refetch();
     toast.success('You successfully logged out', {
       description: "Hope you'll come back again :)",
       action: { label: 'Got it!', onClick: () => {} },
