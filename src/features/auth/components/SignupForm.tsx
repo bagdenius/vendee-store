@@ -32,8 +32,8 @@ export function SignupForm({
   const { control, handleSubmit, setError, reset } = useForm<SignupSchema>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
-      name: '',
-      surname: '',
+      firstName: '',
+      lastName: '',
       email: '',
       password: '',
       confirmPassword: '',
@@ -126,18 +126,18 @@ export function SignupForm({
         </div>
         <FieldGroup className='grid grid-cols-2'>
           <Controller
-            name='name'
+            name='firstName'
             control={control}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor='name'>Name</FieldLabel>
+                <FieldLabel htmlFor='firstName'>First name</FieldLabel>
                 <Input
                   {...field}
-                  id='name'
+                  id='firstName'
                   type='text'
                   placeholder='John'
                   aria-invalid={fieldState.invalid}
-                  autoComplete='name'
+                  autoComplete='given-name'
                 />
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />
@@ -146,18 +146,18 @@ export function SignupForm({
             )}
           />
           <Controller
-            name='surname'
+            name='lastName'
             control={control}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor='surname'>Surname</FieldLabel>
+                <FieldLabel htmlFor='lastName'>Last name</FieldLabel>
                 <Input
                   {...field}
-                  id='surname'
+                  id='lastName'
                   type='text'
                   placeholder='Doe'
                   aria-invalid={fieldState.invalid}
-                  autoComplete='surname'
+                  autoComplete='family-name'
                 />
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />

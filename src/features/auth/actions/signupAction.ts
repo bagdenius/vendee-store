@@ -18,9 +18,10 @@ export async function signupAction(formData: SignupSchema) {
     password: formData.password,
     options: {
       data: {
-        name: formData.name,
-        surname: formData.surname,
+        first_name: formData.firstName,
+        last_name: formData.lastName,
         email: formData.email,
+        role: 'user',
       },
     },
   };

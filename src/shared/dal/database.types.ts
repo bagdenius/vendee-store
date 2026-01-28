@@ -249,30 +249,30 @@ export type Database = {
           avatar: string | null
           created_at: string | null
           email: string
+          first_name: string
           id: string
-          name: string | null
-          role: string
-          surname: string | null
+          last_name: string | null
+          role: Database["public"]["Enums"]["user_role"]
           username: string
         }
         Insert: {
           avatar?: string | null
           created_at?: string | null
           email: string
+          first_name: string
           id: string
-          name?: string | null
-          role?: string
-          surname?: string | null
+          last_name?: string | null
+          role?: Database["public"]["Enums"]["user_role"]
           username: string
         }
         Update: {
           avatar?: string | null
           created_at?: string | null
           email?: string
+          first_name?: string
           id?: string
-          name?: string | null
-          role?: string
-          surname?: string | null
+          last_name?: string | null
+          role?: Database["public"]["Enums"]["user_role"]
           username?: string
         }
         Relationships: []
@@ -285,7 +285,13 @@ export type Database = {
       is_admin: { Args: never; Returns: boolean }
     }
     Enums: {
-      [_ in never]: never
+      user_role:
+        | "user"
+        | "writer"
+        | "marketer"
+        | "manager"
+        | "moderator"
+        | "admin"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -412,6 +418,15 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      user_role: [
+        "user",
+        "writer",
+        "marketer",
+        "manager",
+        "moderator",
+        "admin",
+      ],
+    },
   },
 } as const
