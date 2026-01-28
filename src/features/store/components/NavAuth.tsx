@@ -1,9 +1,9 @@
-import Link from 'next/link';
 import { UserIcon } from 'lucide-react';
+import Link from 'next/link';
 
 import { Button } from '@/shared/components/ui/Button';
 import { SidebarMenu, SidebarMenuItem } from '@/shared/components/ui/Sidebar';
-import { getProfile } from '@/shared/dal/services/profile/getCurrentProfile';
+import { getProfile } from '@/shared/dal/services/profile/getProfile';
 import { NavUser } from './NavUser';
 
 export default async function NavAuth() {
