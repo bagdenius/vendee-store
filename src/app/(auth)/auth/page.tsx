@@ -17,8 +17,8 @@ export default function AuthPage() {
   return (
     <div className='grid lg:grid-cols-2 h-svh'>
       <main className='relative'>
-        <Tabs defaultValue='login' className='absolute w-full h-full'>
-          <header className='flex items-center justify-between p-4 flex-wrap sm:flex-nowrap gap-x-100 gap-y-4 sm:gap-0'>
+        <Tabs defaultValue='login' className='absolute w-full h-full gap-0'>
+          <header className='flex items-center justify-between p-2 sm:p-4 border-b flex-wrap sm:flex-nowrap gap-x-100 gap-y-4 sm:gap-0'>
             <div className='flex flex-1 gap-2 items-center justify-between sm:order-last sm:flex-0'>
               <Link href='/' className='relative w-50 aspect-5/1'>
                 <Image
@@ -40,7 +40,7 @@ export default function AuthPage() {
             </TabsList>
           </header>
           <ScrollArea className='overflow-hidden no-scrollbar'>
-            <div className='w-full max-w-sm mx-auto px-5 pt-10 pb-20'>
+            <div className='w-full max-w-sm mx-auto px-2 sm:px-4 pt-10 pb-20'>
               <TabsContent value='login'>
                 <LoginForm />
               </TabsContent>

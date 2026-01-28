@@ -29,10 +29,11 @@ export function SignupForm({
 }: React.ComponentProps<'form'>) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
-  const { control, handleSubmit, setError } = useForm<SignupSchema>({
+  const { control, handleSubmit, setError, reset } = useForm<SignupSchema>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
-      fullName: '',
+      name: '',
+      surname: '',
       email: '',
       password: '',
       confirmPassword: '',
@@ -44,6 +45,14 @@ export function SignupForm({
     const hash = window.location.hash;
     if (hash.includes('error=access_denied')) {
       toast.warning('OAuth sign up was canceled', {
+        description: 'Try again or use another provider',
+        action: { label: 'Got it!', onClick: () => {} },
+      });
+      window.history.replaceState(null, '', window.location.pathname);
+    }
+    const searchParams = window.location.search;
+    if (searchParams.includes('error=oauth_failed')) {
+      toast.warning('OAuth login was failed', {
         description: 'Try again or use another provider',
         action: { label: 'Got it!', onClick: () => {} },
       });
@@ -70,6 +79,7 @@ export function SignupForm({
         });
       }
       router.push('/#auth=success&action=signup');
+      reset();
     });
   }
 
@@ -114,30 +124,51 @@ export function SignupForm({
             Fill in the form below to create your account
           </p>
         </div>
-        <Controller
-          name='fullName'
-          control={control}
-          render={({ field, fieldState }) => (
-            <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor='fullName'>Full Name</FieldLabel>
-              <Input
-                {...field}
-                id='fullName'
-                type='text'
-                placeholder='John Doe'
-                aria-invalid={fieldState.invalid}
-                autoComplete='name'
-              />
-              {fieldState.invalid ? (
-                <FieldError errors={[fieldState.error]} />
-              ) : (
-                <FieldDescription>
-                  We&apos;ll use this for shipping. Please enter your real name
-                </FieldDescription>
-              )}
-            </Field>
-          )}
-        />
+        <FieldGroup className='grid grid-cols-2'>
+          <Controller
+            name='name'
+            control={control}
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid}>
+                <FieldLabel htmlFor='name'>Name</FieldLabel>
+                <Input
+                  {...field}
+                  id='name'
+                  type='text'
+                  placeholder='John'
+                  aria-invalid={fieldState.invalid}
+                  autoComplete='name'
+                />
+                {fieldState.invalid && (
+                  <FieldError errors={[fieldState.error]} />
+                )}
+              </Field>
+            )}
+          />
+          <Controller
+            name='surname'
+            control={control}
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid}>
+                <FieldLabel htmlFor='surname'>Surname</FieldLabel>
+                <Input
+                  {...field}
+                  id='surname'
+                  type='text'
+                  placeholder='Doe'
+                  aria-invalid={fieldState.invalid}
+                  autoComplete='surname'
+                />
+                {fieldState.invalid && (
+                  <FieldError errors={[fieldState.error]} />
+                )}
+              </Field>
+            )}
+          />
+          <FieldDescription className='col-span-2'>
+            We&apos;ll use this for shipping. Please enter your real name
+          </FieldDescription>
+        </FieldGroup>
         <Controller
           name='email'
           control={control}

@@ -54,7 +54,7 @@ export function NavUser() {
       toast.success(
         `You successfully ${action === 'signup' ? 'signed up' : 'signed in'} ${provider ? ` with ${provider.at(0)?.toUpperCase() + provider.slice(1)}` : ''}`,
         {
-          description: `${profile?.fullName?.split(' ').at(0)}, Welcome and Happy shopping!`,
+          description: `${profile.name}, Welcome and Happy shopping!`,
           action: { label: 'Got it!', onClick: () => {} },
         },
       );
@@ -104,11 +104,14 @@ export function NavUser() {
               className='data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground'
             >
               <Avatar className='h-8 w-8 rounded-lg'>
-                <AvatarImage src={profile.avatar!} alt={profile.fullName!} />
+                <AvatarImage
+                  src={profile.avatar!}
+                  alt={`${profile.name} ${profile.surname}`}
+                />
                 <AvatarFallback className='rounded-lg'>CN</AvatarFallback>
               </Avatar>
               <div className='grid flex-1 text-left text-sm leading-tight'>
-                <span className='truncate font-medium'>{profile.fullName}</span>
+                <span className='truncate font-medium'>{`${profile.name} ${profile.surname}`}</span>
                 <span className='truncate text-xs'>{profile.email}</span>
               </div>
               <ChevronsUpDown className='ml-auto size-4' />
@@ -123,12 +126,15 @@ export function NavUser() {
             <DropdownMenuLabel className='p-0 font-normal'>
               <div className='flex items-center gap-2 px-1 py-1.5 text-left text-sm'>
                 <Avatar className='h-8 w-8 rounded-lg'>
-                  <AvatarImage src={profile.avatar!} alt={profile.fullName!} />
+                  <AvatarImage
+                    src={profile.avatar!}
+                    alt={`${profile.name} ${profile.surname}`!}
+                  />
                   <AvatarFallback className='rounded-lg'>CN</AvatarFallback>
                 </Avatar>
                 <div className='grid flex-1 text-left text-sm leading-tight'>
                   <span className='truncate font-medium'>
-                    {profile.fullName}
+                    {`${profile.name} ${profile.surname}`}
                   </span>
                   <span className='truncate text-xs'>{profile.email}</span>
                 </div>

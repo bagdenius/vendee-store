@@ -1,7 +1,7 @@
 'use server';
 
 import { login } from '@/shared/dal/services/auth/login';
-import { loginSchema, type LoginSchema } from '../schemas/signInSchema';
+import { loginSchema, type LoginSchema } from '../schemas/loginSchema';
 
 export async function loginAction(formData: LoginSchema) {
   const validationResult = loginSchema.safeParse(formData);

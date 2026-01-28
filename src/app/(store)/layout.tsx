@@ -1,3 +1,4 @@
+import StoreFooter from '@/features/store/components/StoreFooter';
 import { StoreHeader } from '@/features/store/components/StoreHeader';
 import { StoreSidebar } from '@/features/store/components/StoreSidebar';
 import { SidebarInset, SidebarProvider } from '@/shared/components/ui/Sidebar';
@@ -13,7 +14,10 @@ export default function StoreLayout({
         <StoreHeader />
         <div className='flex flex-1'>
           <StoreSidebar />
-          <SidebarInset>{children}</SidebarInset>
+          <SidebarInset>
+            {children}
+            <StoreFooter />
+          </SidebarInset>
         </div>
       </SidebarProvider>
     </div>

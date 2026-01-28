@@ -21,7 +21,7 @@ import { Spinner } from '@/shared/components/ui/Spinner';
 import { cn } from '@/shared/lib/utils/tailwindMerge';
 import { loginAction } from '../actions/loginAction';
 import { loginWithOAuthAction } from '../actions/loginWithOAuthAction';
-import { loginSchema, type LoginSchema } from '../schemas/signInSchema';
+import { loginSchema, type LoginSchema } from '../schemas/loginSchema';
 
 export function LoginForm({
   className,
@@ -29,7 +29,7 @@ export function LoginForm({
 }: React.ComponentProps<'form'>) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
-  const { control, handleSubmit, setError } = useForm<LoginSchema>({
+  const { control, handleSubmit, setError, reset } = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
     defaultValues: { email: '', password: '' },
   });
@@ -39,6 +39,14 @@ export function LoginForm({
     const hash = window.location.hash;
     if (hash.includes('error=access_denied')) {
       toast.warning('OAuth login was canceled', {
+        description: 'Try again or use another provider',
+        action: { label: 'Got it!', onClick: () => {} },
+      });
+      window.history.replaceState(null, '', window.location.pathname);
+    }
+    const searchParams = window.location.search;
+    if (searchParams.includes('error=oauth_failed')) {
+      toast.warning('OAuth login was failed', {
         description: 'Try again or use another provider',
         action: { label: 'Got it!', onClick: () => {} },
       });
@@ -65,7 +73,8 @@ export function LoginForm({
         });
         return;
       }
-      router.push('/#auth=success&action=signin');
+      router.push('/#auth=success&action=login');
+      reset();
     });
   }
 
