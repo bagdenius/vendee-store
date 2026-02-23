@@ -8,7 +8,7 @@ import { cacheLife, cacheTag } from 'next/cache';
 
 export async function getProduct(slug: string): Promise<ProductResult> {
   'use cache';
-  cacheLife('days');
+  // cacheLife('days');
   cacheTag(`product-${slug}`);
 
   const supabase = createSupabasePublicClient();
