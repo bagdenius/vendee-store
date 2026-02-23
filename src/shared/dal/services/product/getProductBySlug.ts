@@ -17,7 +17,7 @@ export async function getProduct(slug: string): Promise<ProductResult> {
     .select(
       `id, title, slug, description, price, currency, is_active, created_at,
           images:product_images(id, path, url, sort_order, product_id),
-          categories(id, name, slug, sort_order, created_at)`,
+          categories(id, name, slug, parent_id, sort_order, created_at)`,
     )
     .eq('slug', slug)
     .single();
