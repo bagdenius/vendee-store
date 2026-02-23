@@ -14,7 +14,7 @@ export async function getCategories(): Promise<CategoryListResult> {
   const supabase = createSupabasePublicClient();
   const { data, error } = await supabase
     .from('categories')
-    .select('id, name, slug, sort_order, created_at')
+    .select('id, name, slug, parent_id, sort_order, created_at')
     .order('sort_order', { ascending: true });
   if (error) return { error };
   return { data: objectToCamel(data) };
